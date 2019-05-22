@@ -1,0 +1,6 @@
+<h1>Games#index</h1>
+<% @games.each do |id, game| %>
+  <%= id %>
+  <%= game["boardStack"].pop %>
+<% end %>
+<p>Find me in app/views/games/index.html.erb</p>
