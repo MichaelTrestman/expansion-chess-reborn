@@ -1,2 +1,12 @@
 <h1>Games#show</h1>
-<p>Find me in app/views/games/show.html.erb</p>
+<%= @current_board_state %>
+<div id="board" class="board">
+  <% @board_height.times do |i| %>
+    <div id="row-<%=i%>" class="row">
+      <% @board_width.times do |j| %>
+        <%  square_color = (i % 2 == j % 2) ? 'light' : 'dark' %>
+        <div id="posx-<%=j%>|posy-<%=i%>"class="square <%= square_color %>"></div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

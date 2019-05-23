@@ -1,6 +1,14 @@
 <h1>Games#index</h1>
 <% @games.each do |id, game| %>
-  <%= id %>
-  <%= game["boardStack"].pop %>
+<br>
+  Game: <%= id %>
+  <%= link_to 'Play', "/games/#{id}" %>
+  Started at: <%= game["startTime"] %><br>
+  played on: <%= game["startingboard"] || "board name unavailable" %><br>
+  Players:
+  <% game["playerSides"].each do |side, player| %>
+    <%= player %>, playing <%= side %><br>
+
+  <% end %>
+
 <% end %>
-<p>Find me in app/views/games/index.html.erb</p>
