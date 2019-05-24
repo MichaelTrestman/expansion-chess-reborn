@@ -9,6 +9,21 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
+
+  <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+
+  <script type="text/javascript">
+    var config = {
+      apiKey: "AIzaSyDlc5x9ZLMwCE5Kc1ZA6z3LYeVGMKGKpjI",
+      authDomain: "xchess-a3561.firebaseapp.com",
+      databaseURL: "https://xchess-a3561.firebaseio.com",
+      storageBucket: "devstuff",
+    };
+    firebase.initializeApp(config);
+
+  </script>
   <body>
     <%= yield %>
   </body>

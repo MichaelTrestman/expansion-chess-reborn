@@ -1,12 +1,14 @@
 <h1>Games#show</h1>
-<%= @current_board_state %>
-<div id="board" class="board">
+<div id="board" class="board" style="height:<%= "#{1+(102* @board_height)}px;width:#{(101*@board_width)}px" %>">
   <% @board_height.times do |i| %>
     <div id="row-<%=i%>" class="row">
       <% @board_width.times do |j| %>
         <%  square_color = (i % 2 == j % 2) ? 'light' : 'dark' %>
-        <div id="posx-<%=j%>|posy-<%=i%>"class="square <%= square_color %>"></div>
+        <div id="posx-<%=j%>posy-<%=i%>"class="square <%= square_color %>"></div>
       <% end %>
     </div>
   <% end %>
 </div>
+<script type="text/javascript">
+  BoardFunctions.watchAndUpdateBoard('<%= @game_path %>')
+</script>
