@@ -1,5 +1,9 @@
 #board {
-  margin: 250px;
+  display: inline-block;
+  position: absolute;
+  top: 250px;
+  left: 250px;
+  /*margin: 50px;*/
   border: solid 10px gold;
 }
 .row {

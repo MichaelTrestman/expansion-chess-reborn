@@ -1,4 +1,12 @@
 <h1>Games#show</h1>
+
+
+<div id="left-sidebar">
+
+<h2>XChess!</h2>
+<p>instructions: blah blah blah</p>
+<p>current turn: <span id='turn-indicator'></span></p>
+</div>
 <div id="board" class="board" style="height:<%= "#{1+(102* @board_height)}px;width:#{(101*@board_width)}px" %>">
   <% @board_height.times do |i| %>
     <div id="row-<%=i%>" class="row">
@@ -9,6 +17,11 @@
     </div>
   <% end %>
 </div>
+
 <script type="text/javascript">
+  BoardFunctions.base_url = '<%= request.base_url %> '
+
+  $('#board').css('transform', 'scale(1,1)');
   BoardFunctions.watchAndUpdateBoard('<%= @game_path %>')
+  BoardFunctions.initializeHotKeys();
 </script>
