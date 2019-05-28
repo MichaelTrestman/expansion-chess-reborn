@@ -38,23 +38,23 @@ BoardFunctions.initializeHotKeys = function(){
     } else if ( key == 100) {
 
       var left = $board.css('left').match(/\d+/)[0]
-      left = (parseInt(left) + 10).toString() + 'px';
+      left = (parseInt(left) + 22).toString() + 'px';
       $board.css('left', left)
     } else if ( key == 97) {
 
       var left = $board.css('left').match(/\d+/)[0]
-      left = (parseInt(left) - 10).toString() + 'px';
+      left = (parseInt(left) - 22).toString() + 'px';
       $board.css('left', left)
     } else if ( key == 119) {
       console.log('raising!')
       var top = $board.css('top').match(/\d+/)[0]
-      top = (parseInt(top) - 10).toString() + 'px';
+      top = (parseInt(top) - 22).toString() + 'px';
       $board.css('top', top)
       console.log($board.css('top'))
     } else if ( key == 115) {
       console.log('lowering!')
       var top = $board.css('top').match(/\d+/)[0]
-      top = (parseInt(top) + 10).toString() + 'px';
+      top = (parseInt(top) + 22).toString() + 'px';
       $board.css('top', top)
     }
   })

@@ -1,16 +1,13 @@
 class GamesController < ApplicationController
-  require('./lib/assets/starting_boards')
 
   def new
     @board_names = StartingBoards.keys
   end
 
   def index
-
     @games = firebase_client.get('games').body
   end
-  def calculate_moves (board, chosen_piece)
-  end
+
   def show
     @game_path = "games/#{params[:id]}"
     game_data = firebase_client.get(@game_path).body
@@ -20,6 +17,18 @@ class GamesController < ApplicationController
     @board_height = game_data["height"]
     @board_width = game_data["width"]
   end
+
+  def calculate_moves (starting_board, current_piece_placement, chosen_piece)
+    possible_moves = MovesCalculator.new(
+      starting_board,
+      current_piece_placement,
+      chosen_piece
+    ).calculate_moves
+
+    render :json => possible_moves
+
+  end
+
 
   private
 
