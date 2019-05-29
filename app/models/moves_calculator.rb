@@ -67,7 +67,7 @@ class MovesCalculator
 
   def moves_for_knight
     knight_moves.each do |name, dir_hash|
-      try_until_hit_something(current_space,dir_hash)
+      try_once(current_space,dir_hash)
     end
     @move_set
   end

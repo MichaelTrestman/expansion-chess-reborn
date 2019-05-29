@@ -25,10 +25,10 @@
 .square.dark.upgrade {
   background-color: rgb(0, 102, 0);
 }
-.square-light.movable {
+.square.light.movable {
   background-color: rgb(255, 255, 179);
 }
-.square-dark.movable {
+.square.dark.movable {
   background-color: rgb(255, 255, 7);
 }
 .square-light.killable {

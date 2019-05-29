@@ -104,4 +104,7 @@ BoardFunctions.displayMove = function(_, move){
 
   console.log('attempting to display move :/');
   console.log(move);
+  $square = $('.square#posx-'+ move.posx + 'posy-' + move.posy);
+  $square.addClass('movable');
+
 }
