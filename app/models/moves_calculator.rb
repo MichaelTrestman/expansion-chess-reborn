@@ -12,7 +12,63 @@ class MovesCalculator
       "moves_for_#{@focal_piece[:type]}")
   end
 
+  def moves_for_pawn
+    cardinal_directions.each do |_, dir_hash|
+      try_once(current_space, dir_hash)
+    end
+    no_kill_moves = @move_set.clone.select{|move| move[:killed_piece].nil? }
+    @move_set = []
 
+    diagonal_directions.each do |_, dir_hash|
+      try_once(current_space, dir_hash)
+    end
+
+    kill_moves = @move_set.clone.select{|move| !move[:killed_piece].nil? }
+    @move_set = []
+
+    @move_set = no_kill_moves + kill_moves
+  end
+
+  def moves_for_bishop
+    diagonal_directions.each do |name, dir_hash|
+      try_until_hit_something(current_space,dir_hash)
+    end
+    @move_set
+  end
+
+  def moves_for_king
+    cardinal_directions.each do |name, dir_hash|
+      try_once(current_space,dir_hash)
+    end
+    diagonal_directions.each do |name, dir_hash|
+      try_once(current_space,dir_hash)
+    end
+    @move_set
+  end
+
+  def moves_for_queen
+    cardinal_directions.each do |name, dir_hash|
+      try_until_hit_something(current_space,dir_hash)
+    end
+    diagonal_directions.each do |name, dir_hash|
+      try_until_hit_something(current_space,dir_hash)
+    end
+    @move_set
+  end
+
+  def moves_for_rook
+    cardinal_directions.each do |name, dir_hash|
+      try_until_hit_something(current_space,dir_hash)
+    end
+    @move_set
+  end
+
+  def moves_for_knight
+    knight_moves.each do |name, dir_hash|
+      try_until_hit_something(current_space,dir_hash)
+    end
+    @move_set
+  end
 
   def space_is_off_board candidate_space
     return true if candidate_space[:posx] < 0
@@ -48,7 +104,6 @@ class MovesCalculator
       try_until_hit_something(candidate_space, direction) unless result[:killed_piece]
     end
   end
-
 
   def space_available(candidate_space)
     response = {movable: nil, killed_piece: nil}
@@ -94,47 +149,6 @@ class MovesCalculator
     @current_space
   end
 
-  def moves_for_pawn
-    cardinal_directions.each do |_, dir_hash|
-      try_once(current_space, dir_hash)
-    end
-    no_kill_moves = @move_set.clone.select{|move| move[:killed_piece].nil? }
-    @move_set = []
-
-    diagonal_directions.each do |_, dir_hash|
-      try_once(current_space, dir_hash)
-    end
-
-    kill_moves = @move_set.clone.select{|move| !move[:killed_piece].nil? }
-    @move_set = []
-
-    @move_set = no_kill_moves + kill_moves
-  end
-
-  def moves_for_bishop
-    diagonal_directions.each do |name, dir_hash|
-      try_until_hit_something(current_space,dir_hash)
-    end
-    @move_set
-  end
-
-  def moves_for_king
-
-  end
-
-  def moves_for_queen
-  end
-
-  def moves_for_rook
-    cardinal_directions.each do |name, dir_hash|
-      try_until_hit_something(current_space,dir_hash)
-    end
-    @move_set
-  end
-
-  def moves_for_knight
-  end
-
   def cardinal_directions
     {
       north: {
@@ -177,5 +191,41 @@ class MovesCalculator
     }
   end
 
+  def knight_moves
+    {
+      north_north_east: {
+        x: 1,
+        y: -2,
+      },
+      north_north_west: {
+        x: -1,
+        y: -2
+      },
+      south_south_east: {
+        x: 1,
+        y: 2
+      },
+      south_south_west: {
+        x: -1,
+        y: 2
+      },
+      east_east_north: {
+        x: 2,
+        y: -1
+      },
+      east_east_south: {
+        x: 2,
+        y: 1
+      },
+      west_west_north: {
+        x: -2,
+        y: -1
+      },
+      west_west_south: {
+        x: -2,
+        y: 1
+      }
+    }
+  end
 
 end

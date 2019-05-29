@@ -290,4 +290,243 @@ RSpec.describe MovesCalculator do
       ].to_set)
     end
   end
+  describe '#moves_for_queen' do
+    let(:focal_piece) {{
+      posx: 2,
+      posy: 2,
+      type: "queen",
+      side: "red"
+    }}
+    let(:current_piece_placement) {[
+      {
+        posx: 2,
+        posy: 2,
+        type: "queen",
+        side: "red"
+      },
+      {
+        posx: 2,
+        posy: 1,
+        type: "pawn",
+        side: "red"
+      },
+      {
+        posx: 1,
+        posy: 1,
+        type: "pawn",
+        side: "red"
+      },
+      {
+        posx: 1,
+        posy: 3,
+        type: "pawn",
+        side: "blue"
+      },
+      {
+        posx: 2,
+        posy: 3,
+        type: "rook",
+        side: "blue"
+      },
+    ]}
+    it "moves and kills both diagonally and cardinally, stopping when it hits the board edge, hits a friendly or kills an enemy piece" do
+      expect(moves_calculator.calculate_moves.to_set).to eq([
+          {
+            posx: 1, posy: 3, killed_piece: { type: "pawn", side: "blue"}
+          },
+          {
+            posx: 2, posy: 3, killed_piece: { type: 'rook', side: 'blue'}
+          },
+          {
+            posx: 3,
+            posy: 1,
+            killed_piece: nil
+          },
+          {
+            posx: 4,
+            posy: 0,
+            killed_piece: nil
+          },
+          {
+            posx: 3,
+            posy: 3,
+            killed_piece: nil
+          },
+          {
+            posx: 4,
+            posy: 4,
+            killed_piece: nil
+          },
+          {
+          posx: 3,
+          posy: 2,
+          killed_piece: nil
+        },
+        {
+          posx: 4,
+          posy: 2,
+          killed_piece: nil
+        },
+        {
+          posx: 0,
+          posy: 2,
+          killed_piece: nil
+        },
+        {
+          posx: 1,
+          posy: 2,
+          killed_piece: nil
+        }
+        ].to_set)
+    end
+  end
+
+  describe 'moves_for_king' do
+    let(:focal_piece) {{
+      posx: 2,
+      posy: 2,
+      type: "king",
+      side: "red"
+    }}
+        let(:current_piece_placement) {[
+      {
+        posx: 2,
+        posy: 2,
+        type: "queen",
+        side: "king"
+      },
+      {
+        posx: 2,
+        posy: 1,
+        type: "pawn",
+        side: "red"
+      },
+      {
+        posx: 1,
+        posy: 1,
+        type: "pawn",
+        side: "red"
+      },
+      {
+        posx: 1,
+        posy: 3,
+        type: "pawn",
+        side: "blue"
+      },
+      {
+        posx: 2,
+        posy: 3,
+        type: "rook",
+        side: "blue"
+      },
+    ]}
+    it "moves or kills in all directions only one space" do
+      expect(moves_calculator.calculate_moves.to_set).to eq([
+        {
+          posx: 1, posy: 3, killed_piece: { type: "pawn", side: "blue"}
+        },
+        {
+          posx: 2, posy: 3, killed_piece: { type: 'rook', side: 'blue'}
+        },
+        {
+          posx: 3,
+          posy: 1,
+          killed_piece: nil
+        },
+        {
+          posx: 3,
+          posy: 3,
+          killed_piece: nil
+        },
+        {
+          posx: 3,
+          posy: 2,
+          killed_piece: nil
+        },
+        {
+          posx: 1,
+          posy: 2,
+          killed_piece: nil
+        }
+      ].to_set)
+    end
+  end
+    describe '#moves_for_knight' do
+    let(:focal_piece) {{
+      posx: 2,
+      posy: 2,
+      type: "knight",
+      side: "red"
+    }}
+        let(:current_piece_placement) {[
+      {
+        posx: 2,
+        posy: 2,
+        type: "queen",
+        side: "knight"
+      },
+      {
+        posx: 0,
+        posy: 1,
+        type: "pawn",
+        side: "red"
+      },
+      {
+        posx: 2,
+        posy: 1,
+        type: "pawn",
+        side: "red"
+      },
+      {
+        posx: 1,
+        posy: 1,
+        type: "pawn",
+        side: "red"
+      },
+      {
+        posx: 0,
+        posy: 3,
+        type: "pawn",
+        side: "blue"
+      },
+      {
+        posx: 1,
+        posy: 3,
+        type: "pawn",
+        side: "blue"
+      },
+      {
+        posx: 2,
+        posy: 3,
+        type: "rook",
+        side: "blue"
+      },
+    ]}
+    it "moves or kills like a knight do" do
+      expect(moves_calculator.calculate_moves.to_set).to eq([
+        {
+          posx: 0, posy: 3, killed_piece: { type: "pawn", side: "blue"}
+        },
+        {
+          posx: 4, posy: 3, killed_piece: nil
+        },
+        {
+          posx: 4, posy: 1, killed_piece: nil
+
+        },
+        {
+          posx: 1, posy: 4, killed_piece: nil
+        },
+        {
+          posx: 1, posy: 0, killed_piece: nil
+        },
+        {
+          posx: 3, posy: 4, killed_piece: nil
+        },
+        {
+          posx: 3, posy: 0, killed_piece: nil
+        }
+      ].to_set)
+    end
+  end
 end
