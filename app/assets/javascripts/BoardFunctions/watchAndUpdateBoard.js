@@ -87,10 +87,7 @@ BoardFunctions.getMoves = function(startingBoardName, currentPiecePositions, sel
     dataType: 'json',
     data: moveData,
     success: function(result){
-      console.log('just got back some aaajax!')
-      moves = result;
-      $.each(moves, BoardFunctions.displayMove);
-
+      $.each(result, BoardFunctions.makeMovable);
     },
     failure: function(r){
       alert('failed to get any ajaxes :(')
@@ -100,11 +97,7 @@ BoardFunctions.getMoves = function(startingBoardName, currentPiecePositions, sel
 
 }
 
-BoardFunctions.displayMove = function(_, move){
-
-  console.log('attempting to display move :/');
-  console.log(move);
+BoardFunctions.makeMovable = function(_, move){
   $square = $('.square#posx-'+ move.posx + 'posy-' + move.posy);
   $square.addClass('movable');
-
 }

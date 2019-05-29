@@ -2,7 +2,6 @@ class MovesCalculator
 
   def initialize(args = {})
     @starting_board = args.fetch(:starting_board)
-    @starting_board = StartingBoards.get_board(@starting_board.to_sym)
     @current_piece_placement = args.fetch(:current_piece_placement).map(&:symbolize_keys)
     @focal_piece = args.fetch(:focal_piece)
     @move_set = []

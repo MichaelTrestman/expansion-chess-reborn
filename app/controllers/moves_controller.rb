@@ -1,7 +1,7 @@
 class MovesController < ApplicationController
   def calculate_moves (args = {})
     focal_piece = move_params[:chosen_piece]
-    starting_board = move_params[:starting_board]
+    starting_board = StartingBoards.get_board(move_params[:starting_board].to_sym)
     game_ref = move_params[:game_ref]
     possible_moves = MovesCalculator.new(
       starting_board: starting_board,
