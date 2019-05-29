@@ -10,10 +10,15 @@ RSpec.describe MovesCalculator do
   end
   let(:focal_piece) { nil }
   let(:current_piece_placement){ nil }
-
+  let(:starting_board) {
+    {
+      "width" => 3, "height" => 3,
+      "boardStack" => [],
+      "walls" => [],
+      "upgradeSquares" => []
+    }
+  }
   describe "#space_is_off_board" do
-    let(:starting_board) { {"width" => 3, "height" => 3} }
-
     context 'when the space is on the board' do
 
       let(:candidate_space) { {
@@ -126,7 +131,7 @@ RSpec.describe MovesCalculator do
     ]}
     it "returns the set of valid moves for #{type}" do
       expect do
-        puts moves_calculator.calculate_moves
+        moves_calculator.calculate_moves
       end.to_not raise_error
     end
   end
@@ -180,6 +185,109 @@ RSpec.describe MovesCalculator do
           {:posx => 2,:posy => 0, killed_piece: {:type => "pawn",:side => "blue"}},
         ].to_set)
       end
+    end
+  end
+
+  let(:starting_board) {
+    {
+      "width" => 5, "height" => 5,
+      "boardStack" => [],
+      "walls" => [],
+      "upgradeSquares" => []
+    }
+  }
+  describe '#moves_for_bishop' do
+    let(:focal_piece) { {:posx => 2,:posy => 2,:type => "bishop",:side => "red"} }
+    let(:current_piece_placement){
+      [
+        {
+          :posx => 2,
+          :posy => 2,
+          :type => "bishop",
+          :side => "red"
+        },
+        {
+          :posx => 1,
+          :posy => 1,
+          :type => "rook",
+          :side => "red"
+        },
+        {
+          :posx => 1,
+          :posy => 3,
+          :type => "rook",
+          :side => "blue"
+        }
+      ]
+    }
+    it "moves and kill diagonally, stopping when it hits the board edge, hits a friendly or kills an enemy piece" do
+      expect(moves_calculator.calculate_moves.to_set).to eq([
+          {:posx => 1,:posy => 3, killed_piece: {:type => "rook",:side => "blue"}},
+          {:posx => 3,:posy => 1, killed_piece: nil},
+          {:posx => 4,:posy => 0, killed_piece: nil},
+          {:posx => 3,:posy => 3, killed_piece: nil},
+          {:posx => 4,:posy => 4, killed_piece: nil},
+        ].to_set)
+    end
+  end
+  describe '#moves_for_rook' do
+    let(:focal_piece) {{
+      posx: 2,
+      posy: 2,
+      type: "rook",
+      side: "red"
+    }}
+    let(:current_piece_placement) {[
+      {
+        posx: 2,
+        posy: 2,
+        type: "rook",
+        side: "red"
+      },
+      {
+        posx: 2,
+        posy: 1,
+        type: "pawn",
+        side: "red"
+      },
+      {
+        posx: 1,
+        posy: 2,
+        type: "pawn",
+        side: "blue"
+      }
+    ]}
+    it "moves and kills cardinally, stopping when it hits the board edge, hits a friendly or kills an enemy piece" do
+      expect(moves_calculator.calculate_moves.to_set).to eq([
+        {
+          posx: 1,
+          posy: 2,
+          killed_piece: {
+            type: "pawn",
+            side: "blue"
+          }
+        },
+        {
+          :posx => 3,
+          :posy => 2,
+          killed_piece: nil
+        },
+        {
+          :posx => 4,
+          :posy => 2,
+          killed_piece: nil
+        },
+        {
+          :posx => 2,
+          :posy => 3,
+          killed_piece: nil
+        },
+        {
+          :posx => 2,
+          :posy => 4,
+          killed_piece: nil
+        },
+      ].to_set)
     end
   end
 end

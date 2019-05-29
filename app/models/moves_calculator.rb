@@ -12,19 +12,7 @@ class MovesCalculator
       "moves_for_#{@focal_piece[:type]}")
   end
 
-  def try_until_hit_something(current_space, direction)
-    candidate_space = {
-      posx: current_space[:posx] + direction[:x],
-      posy: current_space[:posy] + direction[:y]
-    }
-    if space_available(candidate_space)[:movable]
-      @move_set << candidate_space
-      puts "trying again"
-      try_until_hit_something(candidate_space, direction)
-    end
-    puts "giving up"
 
-  end
 
   def space_is_off_board candidate_space
     return true if candidate_space[:posx] < 0
@@ -46,8 +34,21 @@ class MovesCalculator
       result.delete(:movable)
       @move_set << result
     end
-
   end
+
+  def try_until_hit_something(current_space, direction)
+    candidate_space = {
+      posx: current_space[:posx] + direction[:x],
+      posy: current_space[:posy] + direction[:y]
+    }
+    result = space_available(candidate_space)
+    if result[:movable]
+      result.delete(:movable)
+      @move_set << result
+      try_until_hit_something(candidate_space, direction) unless result[:killed_piece]
+    end
+  end
+
 
   def space_available(candidate_space)
     response = {movable: nil, killed_piece: nil}
@@ -111,11 +112,10 @@ class MovesCalculator
   end
 
   def moves_for_bishop
-    puts 'bishop moves'
     diagonal_directions.each do |name, dir_hash|
-      puts "trying #{name}"
       try_until_hit_something(current_space,dir_hash)
     end
+    @move_set
   end
 
   def moves_for_king
@@ -126,6 +126,10 @@ class MovesCalculator
   end
 
   def moves_for_rook
+    cardinal_directions.each do |name, dir_hash|
+      try_until_hit_something(current_space,dir_hash)
+    end
+    @move_set
   end
 
   def moves_for_knight
