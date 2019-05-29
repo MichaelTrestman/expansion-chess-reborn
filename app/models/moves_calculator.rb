@@ -112,7 +112,7 @@ class MovesCalculator
 
     if space_is_off_board candidate_space
       response[:movable] = false
-    elsif @starting_board["walls"].include?({
+    elsif @starting_board["walls"].map { |wall| wall.each{|k,v| wall[k.to_sym] = v.to_i }  }.include?({
         posx: candidate_space[:posx],
         posy: candidate_space[:posy]
       })

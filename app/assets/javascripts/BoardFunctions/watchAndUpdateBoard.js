@@ -22,7 +22,7 @@ BoardFunctions.buildBoardFromSnapshot = function(snapshot){
 }
 
 BoardFunctions.setWalls = function(walls){
-  $.each(walls, function(_, wall){
+  $.each(walls, function(i, wall){
     var $square = $('div.square#posx-'+wall.posx+'posy-'+wall.posy).addClass('wall');
   })
 }
