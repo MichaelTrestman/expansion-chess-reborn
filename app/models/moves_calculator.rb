@@ -26,17 +26,6 @@ class MovesCalculator
 
   end
 
-  def try_once(current_space, direction)
-    candidate_space = {
-      posx: current_space[:posx] + direction[:x],
-      posy: current_space[:posy] + direction[:y]
-      #need to put pieces and walls in candidate space
-    }
-
-    @move_set << candidate_space if space_available(candidate_space)[:movable]
-  end
-
-
   def space_is_off_board candidate_space
     return true if candidate_space[:posx] < 0
     return true if candidate_space[:posy] < 0
@@ -45,33 +34,56 @@ class MovesCalculator
     return false
   end
 
+  def try_once(current_space, direction)
+    candidate_space = {
+      posx: current_space[:posx] + direction[:x],
+      posy: current_space[:posy] + direction[:y]
+      #need to put pieces and walls in candidate space
+    }
+
+    result = space_available(candidate_space)
+    if result[:movable]
+      result.delete(:movable)
+      @move_set << result
+    end
+
+  end
+
   def space_available(candidate_space)
-    response = {movable: nil, killable: nil}
+    response = {movable: nil, killed_piece: nil}
 
     if space_is_off_board candidate_space
       response[:movable] = false
-      response[:killable] = false
-      puts "space was off board"
     elsif @starting_board["walls"].include?({
         posx: candidate_space[:posx],
         posy: candidate_space[:posy]
       })
       response[:movable] = false
-      response[:killable] = false
     elsif @current_piece_placement.any? do |placed_piece|
       @placed_piece = placed_piece
       ( placed_piece[:posx] == candidate_space[:posx] ) &&
       ( placed_piece[:posy] == candidate_space[:posy] )
     end
-      if (@placed_piece[:side] == @focal_piece[:side])
-        response = {movable: false, killable: false}
+      if (@placed_piece[:side] != @focal_piece[:side])
+        response = {
+          posx: candidate_space[:posx],
+          posy: candidate_space[:posy],
+          movable: true,
+          killed_piece: {
+            type: @placed_piece[:type],
+            side: @placed_piece[:side]
+          }
+        }
       else
-        response = {movable: true, killable: true}
+        response = {movable: false, killed_piece: nil}
       end
     else
-      puts "empty space, ready to move"
-      puts candidate_space
-      response = {movable: true, killable: false}
+      response = {
+        posx: candidate_space[:posx],
+        posy: candidate_space[:posy],
+        movable: true,
+        killed_piece: nil
+      }
     end
     return response
   end
@@ -85,6 +97,17 @@ class MovesCalculator
     cardinal_directions.each do |_, dir_hash|
       try_once(current_space, dir_hash)
     end
+    no_kill_moves = @move_set.clone.select{|move| move[:killed_piece].nil? }
+    @move_set = []
+
+    diagonal_directions.each do |_, dir_hash|
+      try_once(current_space, dir_hash)
+    end
+
+    kill_moves = @move_set.clone.select{|move| !move[:killed_piece].nil? }
+    @move_set = []
+
+    @move_set = no_kill_moves + kill_moves
   end
 
   def moves_for_bishop

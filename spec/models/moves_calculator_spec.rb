@@ -72,7 +72,7 @@ RSpec.describe MovesCalculator do
       it "returns movable false and killable false" do
         expect(moves_calculator.space_available(candidate_space)).to eq({
             movable: false,
-            killable: false
+            killed_piece: nil
           })
       end
     end
@@ -88,7 +88,7 @@ RSpec.describe MovesCalculator do
       it "returns movable false and killable false" do
         expect(moves_calculator.space_available(candidate_space)).to eq({
             movable: false,
-            killable: false
+            killed_piece: nil
           })
       end
     end
@@ -98,41 +98,88 @@ RSpec.describe MovesCalculator do
       { :posx => 1, :posy => 0, :type => "rook", :side => "blue"},
       { :posx => 1, :posy => 1, :type => "rook", :side => "blue"}
     ]}
-      it "returns movable false and killable false" do
+      it "returns movable true, the coordinates, and the type and side of the enemy piece" do
         expect(moves_calculator.space_available(candidate_space)).to eq({
+            posx: 1, posy: 1,
             movable: true,
-            killable: true
+            killed_piece: {type: "rook", side: "blue"}
           })
       end
     end
-
   end
 
-
-
-
-
-    ['pawn', 'knight', 'bishop', 'rook', 'queen', 'king'].each do |type|
-      let(:focal_piece) { {
+  ['pawn', 'knight', 'bishop', 'rook', 'queen', 'king'].each do |type|
+    let(:focal_piece) { {
+      :posx => 0,
+      :posy => 0,
+      :type => type,
+      :side => "red"
+    } }
+    let(:starting_board) { StartingBoards["first"] }
+    let(:current_piece_placement){[
+      {
         :posx => 0,
         :posy => 0,
         :type => type,
         :side => "red"
-      } }
-      let(:starting_board) { StartingBoards["first"] }
-      let(:current_piece_placement){[
-        {
-          :posx => 0,
-          :posy => 0,
-          :type => type,
-          :side => "red"
-        }
-      ]}
-      it "returns the set of valid moves for #{type}" do
-        expect do
-          puts moves_calculator.calculate_moves
-        end.to_not raise_error
+      }
+    ]}
+    it "returns the set of valid moves for #{type}" do
+      expect do
+        puts moves_calculator.calculate_moves
+      end.to_not raise_error
+    end
+  end
+
+  describe '#moves_for_pawn' do
+    let(:focal_piece) { {:posx => 1,:posy => 1,:type => "pawn",:side => "red"} }
+
+    context 'if no other pieces are around' do
+      let(:current_piece_placement){[focal_piece]}
+      it "calls the right method" do
+        expect(moves_calculator).to receive(:moves_for_pawn)
+        moves_calculator.calculate_moves
+      end
+      it "returns all and only the cardinal directions only as moveable" do
+        expect(moves_calculator.calculate_moves.to_set).to eq([
+          {:posx => 1,:posy => 0, killed_piece: nil},
+          {:posx => 1,:posy => 2, killed_piece: nil},
+          {:posx => 2,:posy => 1, killed_piece: nil},
+          {:posx => 0,:posy => 1, killed_piece: nil},
+        ].to_set)
+      end
+      context 'if in the corner' do
+        let(:focal_piece) { {:posx => 0,:posy => 0,:type => "pawn",:side => "red"} }
+
+        it "doesn't try to move off the board" do
+          expect(moves_calculator.calculate_moves.to_set).to eq([
+            {:posx => 0,:posy => 1, killed_piece: nil},
+            {:posx => 1,:posy => 0, killed_piece: nil}
+          ].to_set)
+        end
       end
     end
+    context 'if it surrounded by hostile pieces' do
 
+      let(:current_piece_placement) {[
+        {:posx => 0,:posy => 0,:type => "pawn",:side => "blue"},
+        {:posx => 1,:posy => 0,:type => "pawn",:side => "blue"},
+        {:posx => 2,:posy => 0,:type => "pawn",:side => "blue"},
+        {:posx => 0,:posy => 1,:type => "pawn",:side => "blue"},
+        {:posx => 2,:posy => 1,:type => "pawn",:side => "blue"},
+        {:posx => 0,:posy => 2,:type => "pawn",:side => "blue"},
+        {:posx => 1,:posy => 2,:type => "pawn",:side => "blue"},
+        {:posx => 2,:posy => 2,:type => "pawn",:side => "blue"}
+      ]}
+
+      it "returns only the diagonal directions as killable" do
+        expect(moves_calculator.calculate_moves.to_set).to eq([
+          {:posx => 0,:posy => 0, killed_piece: {:type => "pawn",:side => "blue"}},
+          {:posx => 2,:posy => 2, killed_piece: {:type => "pawn",:side => "blue"}},
+          {:posx => 0,:posy => 2, killed_piece: {:type => "pawn",:side => "blue"}},
+          {:posx => 2,:posy => 0, killed_piece: {:type => "pawn",:side => "blue"}},
+        ].to_set)
+      end
+    end
+  end
 end

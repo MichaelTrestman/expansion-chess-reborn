@@ -36,7 +36,8 @@ index show games involving logged in user
 update (game id, board, move)
 check to see if current board state of game(id) is the submitted board, and if it allows the move, if so, update the board state and add it to the board state stack
 
-moves controller:
+todo:
 
-get move from board state and piece selection, doesn't touch firebase, just returns the set of valid moves for that piece computed from the board state. front end will use this when board
+optimize available spaces logic to not recheck, use hash instead of array iteration
 
+separate moves into different classes?
