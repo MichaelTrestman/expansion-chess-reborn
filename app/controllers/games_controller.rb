@@ -1,7 +1,7 @@
 class GamesController < ApplicationController
 
   def new
-    @board_names = StartingBoards.keys
+    @board_names = ::StartingBoards.boards.keys
   end
 
   def index
