@@ -2,12 +2,14 @@ class MovesCalculator
 
   def initialize(args = {})
     @starting_board = args.fetch(:starting_board)
-    @current_piece_placement = args.fetch(:current_piece_placement)
+    @starting_board = StartingBoards.get_board(@starting_board.to_sym)
+    @current_piece_placement = args.fetch(:current_piece_placement).map(&:symbolize_keys)
     @focal_piece = args.fetch(:focal_piece)
     @move_set = []
   end
 
   def calculate_moves
+    # byebug
     send(
       "moves_for_#{@focal_piece[:type]}")
   end
@@ -117,8 +119,8 @@ class MovesCalculator
       response[:movable] = false
     elsif @current_piece_placement.any? do |placed_piece|
       @placed_piece = placed_piece
-      ( placed_piece[:posx] == candidate_space[:posx] ) &&
-      ( placed_piece[:posy] == candidate_space[:posy] )
+      ( placed_piece[:posx].to_i == candidate_space[:posx] ) &&
+      ( placed_piece[:posy].to_i == candidate_space[:posy] )
     end
       if (@placed_piece[:side] != @focal_piece[:side])
         response = {

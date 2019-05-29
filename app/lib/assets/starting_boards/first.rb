@@ -1,5 +1,5 @@
-StartingBoards.add_board :basic, {
-  "starting board name" => "basic",
+StartingBoards.add_board :first, {
+  "starting board name" => "first",
   "height" => 11,
   "width" => 10,
   "walls" => [{"posx" => "3","posy" => "3"},{"posx" => "4","posy" => "3"},{"posx" => "5","posy" => "3"},{"posx" => "6","posy" => "3"},{"posx" => "2","posy" => "4"},{"posx" => "7","posy" => "4"},{"posx" => "2","posy" => "6"},{"posx" => "7","posy" => "6"},{"posx" => "3","posy" => "7"},{"posx" => "4","posy" => "7"},{"posx" => "5","posy" => "7"},{"posx" => "6","posy" => "7"}],

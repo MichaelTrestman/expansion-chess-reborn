@@ -18,17 +18,6 @@ class GamesController < ApplicationController
     @board_width = game_data["width"]
   end
 
-  def calculate_moves (starting_board, current_piece_placement, chosen_piece)
-    possible_moves = MovesCalculator.new(
-      starting_board,
-      current_piece_placement,
-      chosen_piece
-    ).calculate_moves
-
-    render :json => possible_moves
-
-  end
-
 
   private
 

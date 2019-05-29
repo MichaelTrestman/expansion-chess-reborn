@@ -23,9 +23,10 @@ zoom: [,] <br>
 </div>
 
 <script type="text/javascript">
-  BoardFunctions.base_url = '<%= request.base_url %> '
+  BoardFunctions.base_url = '<%= request.base_url %>'
 
   $('#board').css('transform', 'scale(1,1)');
-  BoardFunctions.watchAndUpdateBoard('<%= @game_path %>')
+  BoardFunctions.gameRef = '<%= @game_path %>'
+  BoardFunctions.watchAndUpdateBoard(BoardFunctions.gameRef)
   BoardFunctions.initializeHotKeys();
 </script>
