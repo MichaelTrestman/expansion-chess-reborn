@@ -11,8 +11,9 @@ class MovesCalculator
   def populate_space_occupancy_registry
     registry = {}
     @starting_board['walls'].each do |wall|
+      wall = wall.symbolize_keys
       registry[ wall[:posx].to_i ] = {} if registry[ wall[:posx].to_i ].nil?
-      registry[ wall[:posx].to_i ][ wall[:posx].to_i ] = 'wall'
+      registry[ wall[:posx].to_i ][ wall[:posy].to_i ] = 'wall'
     end
     @current_piece_placement.each do |piece|
       registry[ piece[:posx].to_i ] = {} if registry [ piece[:posx].to_i ].nil?
@@ -102,7 +103,7 @@ class MovesCalculator
     }
 
     result = space_available(candidate_space)
-    if result[:movable]
+    if !!result[:movable]
       result.delete(:movable)
       @move_set << result
     end

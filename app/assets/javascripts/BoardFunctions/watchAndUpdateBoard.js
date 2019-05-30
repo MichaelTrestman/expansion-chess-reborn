@@ -60,7 +60,7 @@ BoardFunctions.initializeSquare = function(){
       side: $thisPiece.attr('data-side'),
       type: $thisPiece.attr('data-type')
     }
-
+    BoardFunctions.clearMoves();
     var moves = BoardFunctions.getMoves(
       BoardFunctions.startingBoardName,
       BoardFunctions.currentPiecePositions,
@@ -97,6 +97,10 @@ BoardFunctions.getMoves = function(startingBoardName, currentPiecePositions, sel
 
 }
 
+BoardFunctions.clearMoves = function(){
+  $movable = $('.square.movable');
+  $movable.removeClass('movable');
+}
 BoardFunctions.makeMovable = function(_, move){
   $square = $('.square#posx-'+ move.posx + 'posy-' + move.posy);
   $square.addClass('movable');

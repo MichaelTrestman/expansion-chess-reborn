@@ -102,13 +102,30 @@ RSpec.describe MovesCalculator do
       let(:current_piece_placement){[
       { "posx" => "1", "posy" => "0", "type" => "rook", "side" => "blue"},
       { "posx" => "1", "posy" => "1", "type" => "rook", "side" => "blue"}
-    ]}
+      ]}
       it "returns movable true, the coordinates, and the type and side of the enemy piece" do
         expect(moves_calculator.space_available(candidate_space)).to eq({
             posx: 1, posy: 1,
             movable: true,
             killed_piece: {type: "rook", side: "blue"}
           })
+      end
+    end
+    context 'when the candidate space contains a wall' do
+      let(:candidate_space) { {posx: 1, posy: 1} }
+      let(:starting_board) {
+        {
+          "width" => 3, "height" => 3,
+          "boardStack" => [],
+          "walls" => [{"posx" => "1", "posy" => "1"}],
+          "upgradeSquares" => []
+        }
+      }
+      it 'returns movable false' do
+        expect(moves_calculator.space_available(candidate_space)).to eq({
+          movable: false,
+          killed_piece: nil
+        })
       end
     end
   end
@@ -455,7 +472,7 @@ RSpec.describe MovesCalculator do
       ].to_set)
     end
   end
-    describe '#moves_for_knight' do
+  describe '#moves_for_knight' do
     let(:focal_piece) {{
       posx: 2,
       posy: 2,
@@ -531,6 +548,66 @@ RSpec.describe MovesCalculator do
           posx: 3, posy: 0, killed_piece: nil
         }
       ].to_set)
+    end
+  end
+  describe 'walls' do
+    context 'when a piece is going to hit one' do
+      let(:focal_piece) {{
+        posx: 1,
+        posy: 1,
+        type: "king",
+        side: "red"
+      }}
+      let(:current_piece_placement) {[
+        focal_piece
+      ]}
+  let(:starting_board) {
+    {
+      "width" => 3, "height" => 3,
+      "boardStack" => [],
+      "walls" => [
+        {
+          "posx" => "0",
+          "posy" => "0"
+        },
+        {
+          "posx" => "0",
+          "posy" => "1"
+        },
+        {
+          "posx" => "0",
+          "posy" => "2"
+        },
+        {
+          "posx" => "2",
+          "posy" => "0"
+        },
+        {
+          "posx" => "2",
+          "posy" => "1"
+        },
+        {
+          "posx" => "2",
+          "posy" => "2"
+        },
+      ],
+      "upgradeSquares" => []
+    }
+  }
+      it 'stops' do
+        expect(moves_calculator.calculate_moves).to eq([
+          {
+            posx: 1,
+            posy: 0,
+            killed_piece: nil
+          },
+          {
+            posx: 1,
+            posy: 2,
+            killed_piece: nil
+          }
+        ])
+      end
     end
   end
 end
