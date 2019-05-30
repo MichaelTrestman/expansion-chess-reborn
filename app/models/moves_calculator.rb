@@ -8,6 +8,11 @@ class MovesCalculator
     @move_set = []
   end
 
+  def move_is_valid? proposed_move
+    moves = calculate_moves
+    moves.include? proposed_move
+  end
+
   def populate_space_occupancy_registry
     registry = {}
     @starting_board['walls'].each do |wall|
@@ -101,7 +106,6 @@ class MovesCalculator
       posx: current_space[:posx] + direction[:x],
       posy: current_space[:posy] + direction[:y]
     }
-
     result = space_available(candidate_space)
     if !!result[:movable]
       result.delete(:movable)

@@ -9,7 +9,7 @@ RSpec.describe MovesCalculator do
       })
   end
   let(:focal_piece) { nil }
-  let(:current_piece_placement){ nil }
+  let(:current_piece_placement){ [] }
   let(:starting_board) {
     {
       "width" => 3, "height" => 3,
@@ -18,6 +18,111 @@ RSpec.describe MovesCalculator do
       "upgradeSquares" => []
     }
   }
+
+  describe "#move_is_valid?" do
+    let(:focal_piece){
+      {
+        posx: 1,
+        posy: 1,
+        type: 'king',
+        side: 'red'
+      }
+    }
+    let(:current_piece_placement) {[
+      {
+        posx: 1,
+        posy: 1,
+        type: 'king',
+        side: 'red'
+      }
+    ]}
+    let(:proposed_move){
+      {
+        posx: 2,
+        posy: 2,
+        killed_piece: nil
+      }
+    }
+    context 'if the proposed move is valid' do
+      context 'if the space is empty' do
+        it "returns true" do
+          expect(moves_calculator.move_is_valid?(proposed_move)).to eq true
+        end
+      end
+      context 'if the space contains an enemy' do
+        let(:proposed_move) {
+          {
+            :killed_piece=>{:side=>"blue", :type=>"queen"},
+            posx: 2,
+            posy: 2
+          }
+        }
+        let(:current_piece_placement){
+          [
+            {
+              posx: 2,
+              posy: 2,
+              type: "queen",
+              side: "blue"
+            }
+          ]
+        }
+        it "returns true" do
+          expect(moves_calculator.move_is_valid?(proposed_move)).to eq true
+        end
+      end
+    end
+    context 'if the proposed_move is not valid' do
+      context 'if the proposed move is off the board' do
+        let(:proposed_move){
+          {
+            posx: 4,
+            posy: 2,
+            killed_piece: nil
+          }
+        }
+        it "returns false" do
+          expect(moves_calculator.move_is_valid?(proposed_move)).to eq false
+        end
+      end
+      context 'if a wall is in the way' do
+        let(:starting_board) {
+          {
+            "width" => 3, "height" => 3,
+            "boardStack" => [],
+            "walls" => [{posx: 2, posy: 2}],
+            "upgradeSquares" => []
+          }
+        }
+        it "returns false" do
+          expect(moves_calculator.move_is_valid?(proposed_move)).to eq false
+        end
+      end
+      context 'if a friendly is in the way' do
+        let(:current_piece_placement){
+          [
+            {
+              posx: 2,
+              posy: 2,
+              type: "queen",
+              side: "red"
+            }
+          ]
+        }
+        it "returns false" do
+          expect(moves_calculator.move_is_valid?(proposed_move)).to eq false
+        end
+      end
+    end
+  end
+
+
+
+
+
+
+
+
   describe "#space_is_off_board" do
     context 'when the space is on the board' do
 
