@@ -4,11 +4,27 @@ class MovesCalculator
     @starting_board = args.fetch(:starting_board)
     @current_piece_placement = args.fetch(:current_piece_placement).map(&:symbolize_keys)
     @focal_piece = args.fetch(:focal_piece)
+    @space_occupancy_registry = populate_space_occupancy_registry
     @move_set = []
   end
 
+  def populate_space_occupancy_registry
+    registry = {}
+    @starting_board['walls'].each do |wall|
+      registry[ wall[:posx].to_i ] = {} if registry[ wall[:posx].to_i ].nil?
+      registry[ wall[:posx].to_i ][ wall[:posx].to_i ] = 'wall'
+    end
+    @current_piece_placement.each do |piece|
+      registry[ piece[:posx].to_i ] = {} if registry [ piece[:posx].to_i ].nil?
+      registry[ piece[:posx].to_i ][ piece[:posy].to_i ] = {
+        side: piece[:side],
+        type: piece[:type]
+      }
+    end
+    registry
+  end
+
   def calculate_moves
-    # byebug
     send(
       "moves_for_#{@focal_piece[:type]}")
   end
@@ -83,7 +99,6 @@ class MovesCalculator
     candidate_space = {
       posx: current_space[:posx] + direction[:x],
       posy: current_space[:posy] + direction[:y]
-      #need to put pieces and walls in candidate space
     }
 
     result = space_available(candidate_space)
@@ -99,7 +114,7 @@ class MovesCalculator
       posy: current_space[:posy] + direction[:y]
     }
     result = space_available(candidate_space)
-    if result[:movable]
+    if !!result[:movable]
       result.delete(:movable)
       @move_set << result
       try_until_hit_something(candidate_space, direction) unless result[:killed_piece]
@@ -107,6 +122,36 @@ class MovesCalculator
   end
 
   def space_available(candidate_space)
+    return {movable: false, killed_piece: nil} if space_is_off_board(candidate_space)
+    return {
+      movable: true,
+      killed_piece: nil,
+      posx: candidate_space[:posx],
+      posy:candidate_space[:posy]
+    } if @space_occupancy_registry[ candidate_space[:posx] ].nil?
+    case @space_occupancy_registry[ candidate_space[:posx] ][ candidate_space[:posy] ]
+    when nil
+      return {
+        movable: true, killed_piece: nil,
+        posx: candidate_space[:posx],
+        posy:candidate_space[:posy]
+      }
+    when 'wall'
+      return {movable: false, killed_piece: nil}
+    when -> (space){ space[:side] == @focal_piece[:side] }
+      return {movable: false, killed_piece: nil}
+    else
+      return {
+        movable: true,
+        posx: candidate_space[:posx],
+        posy:candidate_space[:posy],
+        killed_piece: @space_occupancy_registry[ candidate_space[:posx].to_i ][ candidate_space[:posy].to_i ]
+      }
+    end
+  end
+
+
+  def xspace_available(candidate_space)
     response = {movable: nil, killed_piece: nil}
 
     if space_is_off_board candidate_space

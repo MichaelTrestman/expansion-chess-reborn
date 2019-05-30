@@ -21,9 +21,7 @@ class MovesController < ApplicationController
   end
 
   def current_piece_placement
-
     boardStack_ref = "#{move_params[:game_ref]}/boardStack"
-
     firebase_client.get(boardStack_ref).body.pop
   end
 

@@ -66,8 +66,8 @@ RSpec.describe MovesCalculator do
       "turn" => "red"
     } }
     let(:current_piece_placement){[
-      {:posx => 1,:posy => 0,:type => "rook",:side => "red"},
-      {:posx => 0,:posy => 1,:type => "rook",:side => "blue"}
+      {'posx' => "1",'posy' => "0",'type' => "rook",'side' => "red"},
+      {'posx' => "0",'posy' => "1",'type' => "rook",'side' => "blue"}
     ]}
     let(:focal_piece){
       {:posx => 1,:posy => 0,:type => "rook",:side => "red"}
@@ -87,8 +87,8 @@ RSpec.describe MovesCalculator do
       }
       let(:candidate_space) { {posx: 1, posy: 1} }
       let(:current_piece_placement){[
-      {:posx => 1,:posy => 0,:type => "rook",:side => "red"},
-      {:posx => 1,:posy => 1,:type => "rook",:side => "red"}
+      {'posx' => "1",'posy' => "0",'type' => "rook",'side' => "red"},
+      {'posx' => "1",'posy' => "1",'type' => "rook",'side' => "red"}
     ]}
       it "returns movable false and killable false" do
         expect(moves_calculator.space_available(candidate_space)).to eq({
@@ -100,8 +100,8 @@ RSpec.describe MovesCalculator do
     context 'when the candidate space contains an enemy piece' do
       let(:candidate_space) { {posx: 1, posy: 1} }
       let(:current_piece_placement){[
-      { :posx => 1, :posy => 0, :type => "rook", :side => "blue"},
-      { :posx => 1, :posy => 1, :type => "rook", :side => "blue"}
+      { "posx" => "1", "posy" => "0", "type" => "rook", "side" => "blue"},
+      { "posx" => "1", "posy" => "1", "type" => "rook", "side" => "blue"}
     ]}
       it "returns movable true, the coordinates, and the type and side of the enemy piece" do
         expect(moves_calculator.space_available(candidate_space)).to eq({
@@ -123,8 +123,8 @@ RSpec.describe MovesCalculator do
     let(:starting_board) { StartingBoards["first"] }
     let(:current_piece_placement){[
       {
-        :posx => 0,
-        :posy => 0,
+        :posx => "0",
+        :posy => "0",
         :type => type,
         :side => "red"
       }
@@ -140,7 +140,11 @@ RSpec.describe MovesCalculator do
     let(:focal_piece) { {:posx => 1,:posy => 1,:type => "pawn",:side => "red"} }
 
     context 'if no other pieces are around' do
-      let(:current_piece_placement){[focal_piece]}
+      let(:current_piece_placement){
+        [
+          {"posx" => "1", "posy" => "1", "type" => "pawn", "side" => "red"}
+        ]
+      }
       it "calls the right method" do
         expect(moves_calculator).to receive(:moves_for_pawn)
         moves_calculator.calculate_moves
@@ -167,14 +171,14 @@ RSpec.describe MovesCalculator do
     context 'if it surrounded by hostile pieces' do
 
       let(:current_piece_placement) {[
-        {:posx => 0,:posy => 0,:type => "pawn",:side => "blue"},
-        {:posx => 1,:posy => 0,:type => "pawn",:side => "blue"},
-        {:posx => 2,:posy => 0,:type => "pawn",:side => "blue"},
-        {:posx => 0,:posy => 1,:type => "pawn",:side => "blue"},
-        {:posx => 2,:posy => 1,:type => "pawn",:side => "blue"},
-        {:posx => 0,:posy => 2,:type => "pawn",:side => "blue"},
-        {:posx => 1,:posy => 2,:type => "pawn",:side => "blue"},
-        {:posx => 2,:posy => 2,:type => "pawn",:side => "blue"}
+        {:posx => "0",:posy => "0",:type => "pawn",:side => "blue"},
+        {:posx => "1",:posy => "0",:type => "pawn",:side => "blue"},
+        {:posx => "2",:posy => "0",:type => "pawn",:side => "blue"},
+        {:posx => "0",:posy => "1",:type => "pawn",:side => "blue"},
+        {:posx => "2",:posy => "1",:type => "pawn",:side => "blue"},
+        {:posx => "0",:posy => "2",:type => "pawn",:side => "blue"},
+        {:posx => "1",:posy => "2",:type => "pawn",:side => "blue"},
+        {:posx => "2",:posy => "2",:type => "pawn",:side => "blue"}
       ]}
 
       it "returns only the diagonal directions as killable" do
@@ -201,20 +205,20 @@ RSpec.describe MovesCalculator do
     let(:current_piece_placement){
       [
         {
-          :posx => 2,
-          :posy => 2,
+          :posx => "2",
+          :posy => "2",
           :type => "bishop",
           :side => "red"
         },
         {
-          :posx => 1,
-          :posy => 1,
+          :posx => "1",
+          :posy => "1",
           :type => "rook",
           :side => "red"
         },
         {
-          :posx => 1,
-          :posy => 3,
+          :posx => "1",
+          :posy => "3",
           :type => "rook",
           :side => "blue"
         }
@@ -239,20 +243,20 @@ RSpec.describe MovesCalculator do
     }}
     let(:current_piece_placement) {[
       {
-        posx: 2,
-        posy: 2,
+        posx: "2",
+        posy: "2",
         type: "rook",
         side: "red"
       },
       {
-        posx: 2,
-        posy: 1,
+        posx: "2",
+        posy: "1",
         type: "pawn",
         side: "red"
       },
       {
-        posx: 1,
-        posy: 2,
+        posx: "1",
+        posy: "2",
         type: "pawn",
         side: "blue"
       }
@@ -299,32 +303,32 @@ RSpec.describe MovesCalculator do
     }}
     let(:current_piece_placement) {[
       {
-        posx: 2,
-        posy: 2,
+        posx: "2",
+        posy: "2",
         type: "queen",
         side: "red"
       },
       {
-        posx: 2,
-        posy: 1,
+        posx: "2",
+        posy: "1",
         type: "pawn",
         side: "red"
       },
       {
-        posx: 1,
-        posy: 1,
+        posx: "1",
+        posy: "1",
         type: "pawn",
         side: "red"
       },
       {
-        posx: 1,
-        posy: 3,
+        posx: "1",
+        posy: "3",
         type: "pawn",
         side: "blue"
       },
       {
-        posx: 2,
-        posy: 3,
+        posx: "2",
+        posy: "3",
         type: "rook",
         side: "blue"
       },
@@ -390,32 +394,32 @@ RSpec.describe MovesCalculator do
     }}
         let(:current_piece_placement) {[
       {
-        posx: 2,
-        posy: 2,
+        posx: "2",
+        posy: "2",
         type: "queen",
         side: "king"
       },
       {
-        posx: 2,
-        posy: 1,
+        posx: "2",
+        posy: "1",
         type: "pawn",
         side: "red"
       },
       {
-        posx: 1,
-        posy: 1,
+        posx: "1",
+        posy: "1",
         type: "pawn",
         side: "red"
       },
       {
-        posx: 1,
-        posy: 3,
+        posx: "1",
+        posy: "3",
         type: "pawn",
         side: "blue"
       },
       {
-        posx: 2,
-        posy: 3,
+        posx: "2",
+        posy: "3",
         type: "rook",
         side: "blue"
       },
@@ -460,44 +464,44 @@ RSpec.describe MovesCalculator do
     }}
         let(:current_piece_placement) {[
       {
-        posx: 2,
-        posy: 2,
+        posx: "2",
+        posy: "2",
         type: "queen",
         side: "knight"
       },
       {
-        posx: 0,
-        posy: 1,
+        posx: "0",
+        posy: "1",
         type: "pawn",
         side: "red"
       },
       {
-        posx: 2,
-        posy: 1,
+        posx: "2",
+        posy: "1",
         type: "pawn",
         side: "red"
       },
       {
-        posx: 1,
-        posy: 1,
+        posx: "1",
+        posy: "1",
         type: "pawn",
         side: "red"
       },
       {
-        posx: 0,
-        posy: 3,
+        posx: "0",
+        posy: "3",
         type: "pawn",
         side: "blue"
       },
       {
-        posx: 1,
-        posy: 3,
+        posx: "1",
+        posy: "3",
         type: "pawn",
         side: "blue"
       },
       {
-        posx: 2,
-        posy: 3,
+        posx: "2",
+        posy: "3",
         type: "rook",
         side: "blue"
       },
