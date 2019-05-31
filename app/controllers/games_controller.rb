@@ -1,15 +1,31 @@
 class GamesController < ApplicationController
 
   def new
+    @rails_env = ENV['RAILS_ENV']
     @board_names = ::StartingBoards.boards.keys
   end
+
+  def create
+    starting_board = params[:starting_board]
+
+    starting_board = StartingBoards.get_board starting_board.to_sym
+
+    game_data = starting_board
+
+    rails_env = ENV['RAILS_ENV']
+    response = firebase_client.push("#{rails_env}/games", game_data)
+
+    id = response.body["name"]
+    redirect_to :action => "show", :id => id
+  end
+
 
   def index
     @games = firebase_client.get('games').body
   end
 
   def show
-    @game_path = "games/#{params[:id]}"
+    @game_path = "#{ENV['RAILS_ENV']}/games/#{params[:id]}"
     game_data = firebase_client.get(@game_path).body
     raise "Missing Game" if game_data.nil?
     board_stack = game_data["boardStack"]
