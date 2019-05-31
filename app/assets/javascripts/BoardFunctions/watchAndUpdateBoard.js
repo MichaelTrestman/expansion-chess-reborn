@@ -4,6 +4,7 @@ BoardFunctions.watchAndUpdateBoard = function(boardPath){
 }
 
 BoardFunctions.buildBoardFromSnapshot = function(snapshot){
+  $('.piece').remove();
   var gameData = snapshot.val();
   BoardFunctions.startingBoardName = gameData['starting board name'];
   var playerSides = gameData.playerSides;
@@ -52,6 +53,8 @@ BoardFunctions.initializeSquares = function(){
 BoardFunctions.initializeSquare = function(){
   var $this = $(this);
   $this.on('click', function(){
+    BoardFunctions.clearMoves();
+
     var $thisPiece = $this.find('.piece');
 
     var selectedPieceData = {
@@ -60,7 +63,9 @@ BoardFunctions.initializeSquare = function(){
       side: $thisPiece.attr('data-side'),
       type: $thisPiece.attr('data-type')
     }
-    BoardFunctions.clearMoves();
+
+    BoardFunctions.selectedPieceData = selectedPieceData;
+
     var moves = BoardFunctions.getMoves(
       BoardFunctions.startingBoardName,
       BoardFunctions.currentPiecePositions,
@@ -80,7 +85,9 @@ BoardFunctions.getMoves = function(startingBoardName, currentPiecePositions, sel
       game_ref: BoardFunctions.gameRef
     }
   }
+
   var moves;
+
   $.ajax({
     url: movesEndpoint,
     contentType: "application/json",
@@ -95,13 +102,67 @@ BoardFunctions.getMoves = function(startingBoardName, currentPiecePositions, sel
   })
 
 
+
+
 }
 
 BoardFunctions.clearMoves = function(){
-  $movable = $('.square.movable');
+  var $movable = $('.square.movable');
+  $movable.off('click');
   $movable.removeClass('movable');
 }
 BoardFunctions.makeMovable = function(_, move){
-  $square = $('.square#posx-'+ move.posx + 'posy-' + move.posy);
+
+  var $square = $('.square#posx-'+ move.posx + 'posy-' + move.posy);
   $square.addClass('movable');
+  $square.on('click', function(){
+    if (confirm("do you want to submit this move?")){
+      BoardFunctions.clearMoves();
+
+      var submitMoveEndpoint = BoardFunctions.base_url + '/submit_move';
+
+      var proposed_move = {
+        posx: move.posx,
+        posy: move.posy,
+        killed_piece_type: null,
+        killed_piece_side: null
+      }
+
+      var $pieceToKill = $square.find('.piece');
+
+      if ($pieceToKill.length > 0){
+        proposed_move.killed_piece_type = $piece.attr('class').match(/piece-(\w+)/)[1];
+        proposed_move.killed_piece_side = $piece.attr('class').match(/side-(\w+)/)[1];
+      }
+
+
+      var moveData = {
+        move_data: {
+          starting_board: BoardFunctions.startingBoardName,
+          chosen_piece: BoardFunctions.selectedPieceData,
+          game_ref: BoardFunctions.gameRef,
+          proposed_move: proposed_move
+        }
+      }
+      movestring = JSON.stringify(moveData)
+      console.log('movestring')
+      console.log(movestring);
+
+      $.ajax({
+        url: submitMoveEndpoint,
+        type: "POST",
+        dataType: 'json',
+        data: moveData,
+        success: function(result){
+          console.log("worked i guess?")
+          console.log(result)
+        },
+        failure: function(r){
+          alert('failed to get any ajaxes :(')
+        }
+      })
+    } else {
+
+    }
+  })
 }
