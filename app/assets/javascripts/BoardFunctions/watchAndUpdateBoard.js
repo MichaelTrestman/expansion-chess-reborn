@@ -131,8 +131,8 @@ BoardFunctions.makeMovable = function(_, move){
       var $pieceToKill = $square.find('.piece');
 
       if ($pieceToKill.length > 0){
-        proposed_move.killed_piece_type = $piece.attr('class').match(/piece-(\w+)/)[1];
-        proposed_move.killed_piece_side = $piece.attr('class').match(/side-(\w+)/)[1];
+        proposed_move.killed_piece_type = $pieceToKill.attr('class').match(/piece-(\w+)/)[1];
+        proposed_move.killed_piece_side = $pieceToKill.attr('class').match(/side-(\w+)/)[1];
       }
 
 
