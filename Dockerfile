@@ -12,7 +12,7 @@ RUN apt-get install -y nodejs
 
 
 RUN apt-get install -y vim
-
-RUN bundle install
+RUN gem update bundler
+RUN bundle install --path vendor/bundle
 EXPOSE 3000
 

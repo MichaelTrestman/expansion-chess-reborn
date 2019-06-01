@@ -8,21 +8,34 @@ class MovesController < ApplicationController
     end
   end
 
-  def push_board( new_piece_placement)
+  def calculate_moves (args = {})
+    possible_moves = new_move_calculator.calculate_moves
+    render :json => possible_moves
+  end
+
+  private
+
+  def game_data
     @game_data ||= firebase_client.get(move_params[:game_ref]).body
-    turn = @game_data["turn"]
-    sides = @game_data["playerSides"].keys
+    @game_data
+  end
+
+  def push_board( new_piece_placement)
+
+    turn = game_data["turn"]
+    sides = game_data["playerSides"].keys
     new_turn = sides.find{|x| x != turn }
 
-    board_stack = @game_data["boardStack"]
+    board_stack = game_data["boardStack"]
     new_index = board_stack.length
 
-    firebase_client.update('', {
+    body = firebase_client.update('', {
       "#{boardStack_ref}/#{new_index}" => new_piece_placement,
       "#{move_params[:game_ref]}/turn" => new_turn
-    })
+    }).body.symbolize_keys
 
-    render :json => {message: 'ok i think?'}
+    puts "body"
+    puts body
 
   end
 
@@ -36,10 +49,7 @@ class MovesController < ApplicationController
     ).compute_new_piece_placement
   end
 
-  def calculate_moves (args = {})
-    possible_moves = new_move_calculator.calculate_moves
-    render :json => possible_moves
-  end
+
   def move_params
     params.require(:move_data).permit(:game_ref, :starting_board, :chosen_piece => [:posx, :posy, :side, :type], :proposed_move => [:posx, :posy, :killed_piece_type, :killed_piece_side])
   end
@@ -47,8 +57,7 @@ class MovesController < ApplicationController
     "#{move_params[:game_ref]}/boardStack"
   end
   def current_piece_placement
-    @game_data ||= firebase_client.get(move_params[:game_ref]).body
-    @game_data["boardStack"].last
+    game_data["boardStack"].last
   end
 
 
