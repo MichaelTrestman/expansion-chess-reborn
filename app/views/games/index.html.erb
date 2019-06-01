@@ -1,8 +1,8 @@
 <h1>Games#index</h1>
-<% @games.each do |id, game| %>
+<% (@games || []).each do |id, game| %>
 <br>
   Game: <%= id %>
-  <%= link_to 'Play', "/games/#{id}" %>
+  <%= link_to('Play', "/games/#{id}") %>
   Started at: <%= game["startTime"] %><br>
   played on: <%= game["startingboard"] || "board name unavailable" %><br>
   Players:

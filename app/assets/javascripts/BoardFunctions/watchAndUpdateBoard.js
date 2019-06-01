@@ -67,6 +67,7 @@ BoardFunctions.initializeSquare = function(){
     }
 
     BoardFunctions.selectedPieceData = selectedPieceData;
+    BoardFunctions.selectedPieceSquare = $this;
 
     var moves = BoardFunctions.getMoves(
       BoardFunctions.startingBoardName,
@@ -125,6 +126,7 @@ BoardFunctions.makeMovable = function(_, move){
     if (confirm("do you want to submit this move?")){
       BoardFunctions.clearMoves();
       $(this).addClass('pending');
+      BoardFunctions.selectedPieceSquare.addClass('pending');
 
 
       var submitMoveEndpoint = BoardFunctions.base_url + '/submit_move';

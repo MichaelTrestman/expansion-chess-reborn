@@ -1,5 +1,5 @@
 require 'rails_helper'
-require_relative '../../app/lib/assets/starting_boards'
+
 RSpec.describe MovesCalculator do
   let(:moves_calculator) do
       MovesCalculator.new({

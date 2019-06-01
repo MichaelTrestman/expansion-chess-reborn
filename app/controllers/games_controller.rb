@@ -6,22 +6,15 @@ class GamesController < ApplicationController
   end
 
   def create
-    starting_board = params[:starting_board]
 
-    starting_board = StartingBoards.get_board starting_board.to_sym
-
-    game_data = starting_board
-
-    rails_env = ENV['RAILS_ENV']
-    response = firebase_client.push("#{rails_env}/games", game_data)
-
+    response = firebase_client.push("#{ENV['RAILS_ENV']}/games", starting_board)
     id = response.body["name"]
     redirect_to :action => "show", :id => id
   end
 
 
   def index
-    @games = firebase_client.get('games').body
+    @games = firebase_client.get("#{ENV['RAILS_ENV']}games").body
   end
 
   def show
@@ -45,4 +38,10 @@ class GamesController < ApplicationController
     }
     @firebase = Firebase::Client.new(firebase_client_data[:url], firebase_client_data[:private_key_json])
   end
+
+  def starting_board
+    StartingBoards.get_board(params[:starting_board].to_sym)
+  end
+
+
 end

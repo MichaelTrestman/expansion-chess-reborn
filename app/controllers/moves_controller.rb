@@ -2,62 +2,38 @@ class MovesController < ApplicationController
 
   def submit_move
     if new_move_calculator.move_is_valid?(proposed_move)
-      puts 'move valid!'
       push_board( compute_new_piece_placement )
-      change_turn
     else
       raise "move invalid!; #{proposed_move}"
     end
   end
 
-  def change_turn
-    game_data = firebase_client.get(move_params[:game_ref]).body
-    puts "game_data: #{game_data}"
-    turn = game_data["turn"]
-    sides = game_data["playerSides"].keys
-    new_turn = sides.find{|x| x != turn }
-    response = firebase_client.update("#{move_params[:game_ref]}", turn: new_turn)
-
-    puts 'turn response'
-    puts response.body
-  end
-
   def push_board( new_piece_placement)
-    board_stack = firebase_client.get(boardStack_ref).body
+    @game_data ||= firebase_client.get(move_params[:game_ref]).body
+    turn = @game_data["turn"]
+    sides = @game_data["playerSides"].keys
+    new_turn = sides.find{|x| x != turn }
+
+    board_stack = @game_data["boardStack"]
     new_index = board_stack.length
 
-    firebase_client.update(boardStack_ref, {new_index => new_piece_placement})
+    firebase_client.update('', {
+      "#{boardStack_ref}/#{new_index}" => new_piece_placement,
+      "#{move_params[:game_ref]}/turn" => new_turn
+    })
 
     render :json => {message: 'ok i think?'}
 
   end
 
   def compute_new_piece_placement
-    new_piece_placement = current_piece_placement.clone
-    old_piece = new_piece_placement.delete(@focal_piece)
-
-    i = new_piece_placement.index do |piece|
-      piece[:posx] == proposed_move[:posx]
-      piece[:posy] == proposed_move[:posy]
-    end
-    new_piece_placement.delete_at i unless i.nil?
-
-    unless proposed_move[:killed_piece].nil?
-      piece_to_kill = {}
-      piece_to_kill["type"] = proposed_move[:killed_piece][:type]
-      piece_to_kill["side"] = proposed_move[:killed_piece][:side]
-      piece_to_kill["posx"] = proposed_move[:posx].to_s
-      piece_to_kill["posy"] = proposed_move[:posy].to_s
-
-      dead_piece = new_piece_placement.delete(piece_to_kill)
-      raise "can't find piece to kill:\n\n#{new_piece_placement}\n\n#{piece_to_kill}" if dead_piece.nil?
-    end
-    new_piece_placement << {
-      posx: proposed_move[:posx].to_s,
-      posy: proposed_move[:posy].to_s,
-      type: @focal_piece[:type],
-      side: @focal_piece[:side]
-    }
+    BoardStateUpdater.new(
+      focal_piece: @focal_piece,
+      current_piece_placement: current_piece_placement,
+      walls: walls,
+      upgrade_squares: upgrade_squares,
+      proposed_move: proposed_move
+    ).compute_new_piece_placement
   end
 
   def calculate_moves (args = {})
@@ -71,7 +47,8 @@ class MovesController < ApplicationController
     "#{move_params[:game_ref]}/boardStack"
   end
   def current_piece_placement
-    firebase_client.get(boardStack_ref).body.last
+    @game_data ||= firebase_client.get(move_params[:game_ref]).body
+    @game_data["boardStack"].last
   end
 
 
@@ -96,11 +73,17 @@ class MovesController < ApplicationController
   def new_move_calculator
     MovesCalculator.new(move_calculator_args)
   end
-
+  def walls
+    starting_board[:walls]
+  end
+  def upgrade_squares
+    starting_board[:upgrade_squares]
+  end
+  def starting_board
+    StartingBoards.get_board(move_params[:starting_board].to_sym)
+  end
   def move_calculator_args
     @focal_piece = move_params[:chosen_piece]
-    starting_board = StartingBoards.get_board(move_params[:starting_board].to_sym)
-    game_ref = move_params[:game_ref]
     {
       starting_board: starting_board,
       current_piece_placement: current_piece_placement,
