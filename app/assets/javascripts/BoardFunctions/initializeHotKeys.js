@@ -20,6 +20,13 @@ BoardFunctions.initializeHotKeys = function(){
       yScale = ( yScale + 0.05 ).toString();
 
       $board.css('transform', 'scale(' + xScale + ',' + yScale + ')')
+    } else if (key==92){
+      console.log('reloading some shiz')
+      firebase.database().ref(BoardFunctions.gameRef)
+          .once('value', BoardFunctions.buildBoardFromSnapshot);
+
+    } else if (key==88 || key ==120){
+      BoardFunctions.clearMoves();
     } else if (key == 91) {
       var $board = $('#board')
       var currentScale = $board.css('transform')

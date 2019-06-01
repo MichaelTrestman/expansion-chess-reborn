@@ -5,6 +5,7 @@ BoardFunctions.watchAndUpdateBoard = function(boardPath){
 
 BoardFunctions.buildBoardFromSnapshot = function(snapshot){
   $('.piece').remove();
+  BoardFunctions.clearMoves();
   var gameData = snapshot.val();
   BoardFunctions.startingBoardName = gameData['starting board name'];
   var playerSides = gameData.playerSides;
@@ -52,6 +53,7 @@ BoardFunctions.initializeSquares = function(){
 
 BoardFunctions.initializeSquare = function(){
   var $this = $(this);
+  $this.off('click');
   $this.on('click', function(){
     BoardFunctions.clearMoves();
 
@@ -71,7 +73,7 @@ BoardFunctions.initializeSquare = function(){
       BoardFunctions.currentPiecePositions,
       selectedPieceData
     );
-    $.each(moves, BoardFunctions.displayMove);
+
   })
 }
 
@@ -108,16 +110,22 @@ BoardFunctions.getMoves = function(startingBoardName, currentPiecePositions, sel
 
 BoardFunctions.clearMoves = function(){
   var $movable = $('.square.movable');
+  $('.pending').removeClass('pending');
   $movable.off('click');
   $movable.removeClass('movable');
 }
 BoardFunctions.makeMovable = function(_, move){
 
   var $square = $('.square#posx-'+ move.posx + 'posy-' + move.posy);
+
   $square.addClass('movable');
+  $square.off('click');
   $square.on('click', function(){
+    $square.off('click');
     if (confirm("do you want to submit this move?")){
       BoardFunctions.clearMoves();
+      $(this).addClass('pending');
+
 
       var submitMoveEndpoint = BoardFunctions.base_url + '/submit_move';
 
@@ -162,7 +170,7 @@ BoardFunctions.makeMovable = function(_, move){
         }
       })
     } else {
-
+      BoardFunctions.clearMoves();
     }
   })
 }

@@ -4,9 +4,22 @@ class MovesController < ApplicationController
     if new_move_calculator.move_is_valid?(proposed_move)
       puts 'move valid!'
       push_board( compute_new_piece_placement )
+      change_turn
     else
       raise "move invalid!; #{proposed_move}"
     end
+  end
+
+  def change_turn
+    game_data = firebase_client.get(move_params[:game_ref]).body
+    puts "game_data: #{game_data}"
+    turn = game_data["turn"]
+    sides = game_data["playerSides"].keys
+    new_turn = sides.find{|x| x != turn }
+    response = firebase_client.update("#{move_params[:game_ref]}", turn: new_turn)
+
+    puts 'turn response'
+    puts response.body
   end
 
   def push_board( new_piece_placement)
@@ -60,6 +73,7 @@ class MovesController < ApplicationController
   def current_piece_placement
     firebase_client.get(boardStack_ref).body.last
   end
+
 
   def proposed_move
     proposed_move = {

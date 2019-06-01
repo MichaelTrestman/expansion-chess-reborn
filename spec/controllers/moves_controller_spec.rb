@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe MovesController, type: :controller do
 
-  describe "#GET #calculate_moves" do
+  xdescribe "#GET #calculate_moves" do
     it "returns the set of valid moves for the selected piece" do
 
       get '/calculate_moves' => MovesController.new.calculate_moves, params: {

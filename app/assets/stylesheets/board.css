@@ -31,6 +31,10 @@
 .square.dark.movable {
   background-color: rgb(255, 255, 7);
 }
+.square.pending {
+  background-color: blue;
+}
+
 .square-light.killable {
   background-color: rgb(200, 10, 10);
 }
