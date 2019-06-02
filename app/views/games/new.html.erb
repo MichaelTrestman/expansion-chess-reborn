@@ -1,5 +1,3 @@
-<%= @board_names %>
-<%= @rails_env %>
 <%= form_tag("/games", method: "post") do %>
 <%= label_tag 'Choose a starting board' %>
 <%= select_tag :starting_board, options_for_select(@board_names) %>

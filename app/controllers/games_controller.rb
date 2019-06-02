@@ -14,6 +14,7 @@ class GamesController < ApplicationController
 
   def index
     @games = firebase_client.get("#{ENV['RAILS_ENV']}/games").body
+    puts @games
   end
 
   def show

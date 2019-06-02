@@ -68,6 +68,7 @@ BoardFunctions.initializeSquare = function(){
 
     BoardFunctions.selectedPieceData = selectedPieceData;
     BoardFunctions.selectedPieceSquare = $this;
+    BoardFunctions.$selectedPiece = $this.find('.piece');
 
     var moves = BoardFunctions.getMoves(
       BoardFunctions.startingBoardName,
@@ -123,56 +124,88 @@ BoardFunctions.makeMovable = function(_, move){
   $square.off('click');
   $square.on('click', function(){
     $square.off('click');
-    if (confirm("do you want to submit this move?")){
-      BoardFunctions.clearMoves();
-      $(this).addClass('pending');
-      BoardFunctions.selectedPieceSquare.addClass('pending');
 
-
-      var submitMoveEndpoint = BoardFunctions.base_url + '/submit_move';
-
-      var proposed_move = {
-        posx: move.posx,
-        posy: move.posy,
-        killed_piece_type: null,
-        killed_piece_side: null
-      }
-
-      var $pieceToKill = $square.find('.piece');
-
-      if ($pieceToKill.length > 0){
-        proposed_move.killed_piece_type = $pieceToKill.attr('class').match(/piece-(\w+)/)[1];
-        proposed_move.killed_piece_side = $pieceToKill.attr('class').match(/side-(\w+)/)[1];
-      }
-
-
-      var moveData = {
-        move_data: {
-          starting_board: BoardFunctions.startingBoardName,
-          chosen_piece: BoardFunctions.selectedPieceData,
-          game_ref: BoardFunctions.gameRef,
-          proposed_move: proposed_move
-        }
-      }
-      movestring = JSON.stringify(moveData)
-      console.log('movestring')
-      console.log(movestring);
-
-      $.ajax({
-        url: submitMoveEndpoint,
-        type: "POST",
-        dataType: 'json',
-        data: moveData,
-        success: function(result){
-          console.log("worked i guess?")
-          console.log(result)
-        },
-        failure: function(r){
-          alert('failed to get any ajaxes :(')
-        }
-      })
-    } else {
-      BoardFunctions.clearMoves();
+    var pendingPiece = {
+      posx: move.posx,
+      posy: move.posy,
+      side: BoardFunctions.selectedPieceData.side,
+      type: BoardFunctions.selectedPieceData.type
     }
+
+    var $pendingKilledPiece = $square.find('.piece');
+
+    $pendingKilledPiece.remove();
+    var pendingKilledPieceData = {
+      posx: $pendingKilledPiece.attr('data-posX'),
+      posy: $pendingKilledPiece.attr('data-posY'),
+      side: $pendingKilledPiece.attr('data-side'),
+      type: $pendingKilledPiece.attr('data-type')
+    }
+
+
+    var $pendingPiece = BoardFunctions.placePiece(null, pendingPiece);
+    BoardFunctions.$selectedPiece.remove();
+    $pendingPiece.addClass('pendingPiece');
+
+
+
+    $(this).addClass('pending');
+    BoardFunctions.selectedPieceSquare.addClass('pending');
+
+    setTimeout(function(){
+      if (confirm("do you want to submit this move?")){
+        BoardFunctions.clearMoves();
+
+
+        var submitMoveEndpoint = BoardFunctions.base_url + '/submit_move';
+
+        var proposed_move = {
+          posx: move.posx,
+          posy: move.posy,
+          killed_piece_type: null,
+          killed_piece_side: null
+        }
+
+        var $pieceToKill = $pendingKilledPiece;
+
+        if ($pieceToKill.length > 0){
+          proposed_move.killed_piece_type = $pieceToKill.attr('class').match(/piece-(\w+)/)[1];
+          proposed_move.killed_piece_side = $pieceToKill.attr('class').match(/side-(\w+)/)[1];
+        }
+
+
+        var moveData = {
+          move_data: {
+            starting_board: BoardFunctions.startingBoardName,
+            chosen_piece: BoardFunctions.selectedPieceData,
+            game_ref: BoardFunctions.gameRef,
+            proposed_move: proposed_move
+          }
+        }
+        movestring = JSON.stringify(moveData)
+        console.log('movestring')
+        console.log(movestring);
+
+        $.ajax({
+          url: submitMoveEndpoint,
+          type: "POST",
+          dataType: 'json',
+          data: moveData,
+          success: function(result){
+            console.log("worked i guess?")
+            console.log(result)
+          },
+          failure: function(r){
+            alert('failed to get any ajaxes :(')
+          }
+        })
+        $('.pendingPiece').removeClass('pendingPiece');
+      } else {
+        BoardFunctions.clearMoves();
+        $square.find('.piece').remove();
+        BoardFunctions.placePiece(null, BoardFunctions.selectedPieceData);
+        BoardFunctions.placePiece(null, pendingKilledPieceData);
+      }
+    }, 0)
   })
 }

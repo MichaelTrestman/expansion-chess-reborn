@@ -30,4 +30,5 @@ BoardFunctions.placePiece = function(_, piece){
 
   var $square = $('#posx-' + piece.posx +'posy-' + piece.posy);
   $square.append($piece);
+  return $piece
 }

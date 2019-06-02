@@ -1,11 +1,12 @@
 <h1>Games#index</h1>
+<%= link_to("Create new game", '/games/new.html') %>
 <% (@games || []).each do |id, game| %>
 <br>
   Game: <%= id %>
   <%= link_to('Play', "/games/#{id}") %>
-  Started at: <%= game["startTime"] %><br>
-  played on: <%= game["startingboard"] || "board name unavailable" %><br>
-  Players:
+  Started at: <%= game["startTime"] || "start time unavailable" %><br>
+  played on: <%= game["starting board name"] || "board name unavailable" %><br>
+  Players: <br>
   <% game["playerSides"].each do |side, player| %>
     <%= player %>, playing <%= side %><br>
 
