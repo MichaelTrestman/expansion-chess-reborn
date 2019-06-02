@@ -25,14 +25,28 @@ class BoardStateUpdater
       piece_to_kill["posy"] = @proposed_move[:posy].to_s
 
       dead_piece = new_piece_placement.delete(piece_to_kill)
+
+
       raise "can't find piece to kill:\n\n#{new_piece_placement}\n\n#{piece_to_kill}" if dead_piece.nil?
     end
-    new_piece_placement << {
+
+    focal_piece_after_move = {
       posx: @proposed_move[:posx].to_s,
       posy: @proposed_move[:posy].to_s,
       type: @focal_piece[:type],
       side: @focal_piece[:side]
     }
+
+    if focal_piece_after_move[:type] == 'pawn' && @upgrade_squares.map(&:symbolize_keys).include?({
+        posx: focal_piece_after_move[:posx],
+        posy: focal_piece_after_move[:posy]
+      })
+      focal_piece_after_move[:type] = 'queen'
+    end
+
+    new_piece_placement << focal_piece_after_move
+
+
     new_piece_placement
   end
 

@@ -82,15 +82,19 @@ class MovesController < ApplicationController
   def new_move_calculator
     MovesCalculator.new(move_calculator_args)
   end
+
   def walls
     starting_board[:walls]
   end
+
   def upgrade_squares
-    starting_board[:upgrade_squares]
+    starting_board["upgradeSquares"]
   end
+
   def starting_board
     StartingBoards.get_board(move_params[:starting_board].to_sym)
   end
+
   def move_calculator_args
     @focal_piece = move_params[:chosen_piece]
     {
@@ -101,7 +105,6 @@ class MovesController < ApplicationController
   end
 
   def firebase_client
-
     firebase_client_data = {
       url: "https://xchess-a3561.firebaseio.com",
       private_key_json: File.open("/Users/michaeltrestman/keys/xchess-a3561-firebase-adminsdk-2hn8l-2e1b6600b5.json").read
