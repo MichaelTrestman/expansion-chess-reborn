@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
+
+  match '/', to: GamesController.action(:index), via: [:get]
+
   resources :games, only: [:index, :show, :new, :create]
+
 
   defaults format: :json do
 

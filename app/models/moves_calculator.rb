@@ -2,6 +2,7 @@ class MovesCalculator
 
   def initialize(args = {})
     @starting_board = args.fetch(:starting_board)
+    @current_turn = args.fetch(:current_turn)
     @current_piece_placement = args.fetch(:current_piece_placement).map(&:symbolize_keys)
     @focal_piece = args.fetch(:focal_piece)
     @space_occupancy_registry = populate_space_occupancy_registry
@@ -31,6 +32,7 @@ class MovesCalculator
   end
 
   def calculate_moves
+    return [] unless @focal_piece[:side] == @current_turn
     send(
       "moves_for_#{@focal_piece[:type]}")
   end

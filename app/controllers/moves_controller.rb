@@ -8,7 +8,7 @@ class MovesController < ApplicationController
     end
   end
 
-  def calculate_moves (args = {})
+  def calculate_moves
     possible_moves = new_move_calculator.calculate_moves
     render :json => possible_moves
   end
@@ -22,7 +22,7 @@ class MovesController < ApplicationController
 
   def push_board( new_piece_placement)
 
-    turn = game_data["turn"]
+    turn = current_turn
     sides = game_data["playerSides"].keys
     new_turn = sides.find{|x| x != turn }
 
@@ -31,7 +31,8 @@ class MovesController < ApplicationController
 
     body = firebase_client.update('', {
       "#{boardStack_ref}/#{new_index}" => new_piece_placement,
-      "#{move_params[:game_ref]}/turn" => new_turn
+      "#{move_params[:game_ref]}/turn" => new_turn,
+      "#{move_params[:game_ref]}/lastUpdate" => Time.new
     }).body.symbolize_keys
 
     puts "body"
@@ -94,20 +95,23 @@ class MovesController < ApplicationController
   def starting_board
     StartingBoards.get_board(move_params[:starting_board].to_sym)
   end
-
+  def current_turn
+    game_data["turn"]
+  end
   def move_calculator_args
     @focal_piece = move_params[:chosen_piece]
     {
       starting_board: starting_board,
       current_piece_placement: current_piece_placement,
-      focal_piece: @focal_piece
+      focal_piece: @focal_piece,
+      current_turn: current_turn
     }
   end
 
   def firebase_client
     firebase_client_data = {
       url: "https://xchess-a3561.firebaseio.com",
-      private_key_json: File.open("/Users/michaeltrestman/keys/xchess-a3561-firebase-adminsdk-2hn8l-2e1b6600b5.json").read
+      private_key_json: File.open(ENV['PATH_TO_FB_KEY_JSON']).read
     }
     @firebase = Firebase::Client.new(firebase_client_data[:url], firebase_client_data[:private_key_json])
   end

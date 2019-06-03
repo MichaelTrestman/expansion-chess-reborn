@@ -5,9 +5,11 @@ RSpec.describe MovesCalculator do
       MovesCalculator.new({
         starting_board: starting_board,
         current_piece_placement: current_piece_placement,
-        focal_piece: focal_piece
+        focal_piece: focal_piece,
+        current_turn: current_turn
       })
   end
+  let(:current_turn) {'red'}
   let(:focal_piece) { nil }
   let(:current_piece_placement){ [] }
   let(:starting_board) {

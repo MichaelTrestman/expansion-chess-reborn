@@ -6,7 +6,9 @@ class GamesController < ApplicationController
   end
 
   def create
-    response = firebase_client.push("#{ENV['RAILS_ENV']}/games", starting_board)
+    board = starting_board
+    board[:lastUpdate] = Time.now
+    response = firebase_client.push("#{ENV['RAILS_ENV']}/games", board)
     id = response.body["name"]
     redirect_to :action => "show", :id => id
   end
@@ -32,7 +34,7 @@ class GamesController < ApplicationController
   def firebase_client
     firebase_client_data = {
       url: "https://xchess-a3561.firebaseio.com",
-      private_key_json: File.open("/Users/michaeltrestman/keys/xchess-a3561-firebase-adminsdk-2hn8l-2e1b6600b5.json").read
+      private_key_json: File.open(ENV['PATH_TO_FB_KEY_JSON']).read
     }
     @firebase = Firebase::Client.new(firebase_client_data[:url], firebase_client_data[:private_key_json])
   end

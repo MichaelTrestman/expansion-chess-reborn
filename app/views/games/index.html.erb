@@ -4,7 +4,7 @@
 <br>
   Game: <%= id %>
   <%= link_to('Play', "/games/#{id}") %>
-  Started at: <%= game["startTime"] || "start time unavailable" %><br>
+  Last update: <%= game["lastUpdate"] || "time unavailable" %><br>
   played on: <%= game["starting board name"] || "board name unavailable" %><br>
   Players: <br>
   <% game["playerSides"].each do |side, player| %>
