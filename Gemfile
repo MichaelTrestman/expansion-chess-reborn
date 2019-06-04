@@ -8,7 +8,8 @@ gem 'rails', '~> 5.2.3'
 gem 'firebase'
 gem 'rspec-rails'
 gem 'jquery-rails'
-
+gem 'redis'
+gem 'redis-namespace'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets

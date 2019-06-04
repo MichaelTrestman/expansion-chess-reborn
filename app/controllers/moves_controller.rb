@@ -35,8 +35,6 @@ class MovesController < ApplicationController
       "#{move_params[:game_ref]}/lastUpdate" => Time.new
     }).body.symbolize_keys
 
-    puts "body"
-    puts body
 
   end
 
