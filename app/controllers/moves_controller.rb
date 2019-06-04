@@ -13,6 +13,10 @@ class MovesController < ApplicationController
     render :json => possible_moves
   end
 
+  def ai_pick_move
+    AI.pick_random_move(move_calculator_args)
+  end
+
   private
 
   def game_data
@@ -96,6 +100,7 @@ class MovesController < ApplicationController
   def current_turn
     game_data["turn"]
   end
+
   def move_calculator_args
     @focal_piece = move_params[:chosen_piece]
     {
