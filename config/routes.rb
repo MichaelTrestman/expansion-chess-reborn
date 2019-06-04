@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
     match '/calculate_moves', to: MovesController.action(:calculate_moves), via: [:get]
 
+    match '/ai_move', to: MovesController.action(:ai_move), via: [:get]
+
     match '/submit_move', to: MovesController.action(:submit_move), via: [:post]
   end
 

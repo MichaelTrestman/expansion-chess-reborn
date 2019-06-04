@@ -3,24 +3,67 @@ class AI
     @args = args
     @starting_board = args.fetch(:starting_board)
     @current_turn = args.fetch(:current_turn)
-    @current_piece_placement = args.fetch(:current_piece_placement).map(&:symbolize_keys)
+    @current_piece_placement = args.fetch(:current_piece_placement)
   end
 
-  def pick_random_move
+  def assemble_possible_moves
     all_tha_moves = []
     current_turn_pieces.each do |piece|
       args = @args.clone
       args[:focal_piece] = piece
       this_piece_moves = MovesCalculator.new(args).calculate_moves
       this_piece_moves.each do |move|
-        all_tha_moves << { piece => move }
+        all_tha_moves << [ piece, move ]
       end
     end
-    all_tha_moves.sample
+    all_tha_moves
+  end
+
+  def pick_best_move
+    assemble_possible_moves.sort_by{|x| value_for_move(x)}.last
+  end
+
+  def pick_random_move
+    assemble_possible_moves.sample
   end
 
   def current_turn_pieces
     @current_turn_pieces ||= @current_piece_placement.select{|piece| piece[:side] == @current_turn}
+  end
+
+  def value_for_move move_tup
+    piece, move = move_tup
+
+    bsu_args = {
+      focal_piece: piece,
+      current_piece_placement: @current_piece_placement,
+      upgrade_squares: @starting_board.fetch(:upgradeSquares),
+      proposed_move: move
+    }
+
+    piece_placement = BoardStateUpdater.new(bsu_args).compute_new_piece_placement
+
+    value_for_board_state(@current_turn, piece_placement)
+  end
+
+  def value_for_board_state(active_side,piece_placement)
+    value = 0
+    piece_placement.each do |piece|
+      piece_valence = (piece[:side] == active_side) ? 1 : -1
+      value += (piece_values[piece[:type].to_sym] * piece_valence)
+   end
+   value
+  end
+
+  def piece_values
+    {
+      pawn: 100,
+      knight: 350,
+      bishop: 350,
+      rook: 525,
+      queen: 1000,
+      king: 20000
+    }
   end
 
 end

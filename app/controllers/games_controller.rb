@@ -20,12 +20,12 @@ class GamesController < ApplicationController
 
   def show
     @game_path = "#{ENV['RAILS_ENV']}/games/#{params[:id]}"
-    game_data = firebase_client.get(@game_path).body
+    game_data = firebase_client.get(@game_path).body.deep_symbolize_keys
     raise "Missing Game" if game_data.nil?
-    board_stack = game_data["boardStack"]
+    board_stack = game_data[:boardStack]
     @current_board_state = board_stack.last
-    @board_height = game_data["height"]
-    @board_width = game_data["width"]
+    @board_height = game_data[:height]
+    @board_width = game_data[:width]
   end
 
   private
@@ -39,6 +39,6 @@ class GamesController < ApplicationController
   end
 
   def starting_board
-    StartingBoards.get_board(params[:starting_board].to_sym)
+    StartingBoards.get_board(params[:starting_board].to_sym).deep_symbolize_keys
   end
 end

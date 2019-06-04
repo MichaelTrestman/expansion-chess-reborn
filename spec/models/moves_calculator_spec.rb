@@ -14,10 +14,10 @@ RSpec.describe MovesCalculator do
   let(:current_piece_placement){ [] }
   let(:starting_board) {
     {
-      "width" => 3, "height" => 3,
-      "boardStack" => [],
-      "walls" => [],
-      "upgradeSquares" => []
+      :width => 3, :height => 3,
+      :boardStack => [],
+      :walls => [],
+      :upgradeSquares => []
     }
   }
 
@@ -90,11 +90,11 @@ RSpec.describe MovesCalculator do
       context 'if a wall is in the way' do
         let(:starting_board) {
           {
-            "width" => 3, "height" => 3,
-            "boardStack" => [],
-            "walls" => [{posx: 2, posy: 2}],
-            "upgradeSquares" => []
-          }
+            :width => 3, :height => 3,
+            :boardStack => [],
+            :walls => [{posx: 2, posy: 2}],
+            :upgradeSquares => []
+          }.deep_symbolize_keys
         }
         it "returns false" do
           expect(moves_calculator.move_is_valid?(proposed_move)).to eq false
@@ -171,10 +171,10 @@ RSpec.describe MovesCalculator do
         "blue" => "unassigned"
       },
       "turn" => "red"
-    } }
+    }.deep_symbolize_keys }
     let(:current_piece_placement){[
-      {'posx' => "1",'posy' => "0",'type' => "rook",'side' => "red"},
-      {'posx' => "0",'posy' => "1",'type' => "rook",'side' => "blue"}
+      {:posx => "1",:posy => "0",:type => "rook",:side => "red"},
+      {:posx => "0",:posy => "1",:type => "rook",:side => "blue"}
     ]}
     let(:focal_piece){
       {:posx => 1,:posy => 0,:type => "rook",:side => "red"}
@@ -194,8 +194,8 @@ RSpec.describe MovesCalculator do
       }
       let(:candidate_space) { {posx: 1, posy: 1} }
       let(:current_piece_placement){[
-      {'posx' => "1",'posy' => "0",'type' => "rook",'side' => "red"},
-      {'posx' => "1",'posy' => "1",'type' => "rook",'side' => "red"}
+      {:posx => "1",:posy => "0",:type => "rook",:side => "red"},
+      {:posx => "1",:posy => "1",:type => "rook",:side => "red"}
     ]}
       it "returns movable false and killable false" do
         expect(moves_calculator.space_available(candidate_space)).to eq({
@@ -207,8 +207,8 @@ RSpec.describe MovesCalculator do
     context 'when the candidate space contains an enemy piece' do
       let(:candidate_space) { {posx: 1, posy: 1} }
       let(:current_piece_placement){[
-      { "posx" => "1", "posy" => "0", "type" => "rook", "side" => "blue"},
-      { "posx" => "1", "posy" => "1", "type" => "rook", "side" => "blue"}
+      { :posx => "1", :posy => "0", :type => "rook", :side => "blue"},
+      { :posx => "1", :posy => "1", :type => "rook", :side => "blue"}
       ]}
       it "returns movable true, the coordinates, and the type and side of the enemy piece" do
         expect(moves_calculator.space_available(candidate_space)).to eq({
@@ -226,7 +226,7 @@ RSpec.describe MovesCalculator do
           "boardStack" => [],
           "walls" => [{"posx" => "1", "posy" => "1"}],
           "upgradeSquares" => []
-        }
+        }.deep_symbolize_keys
       }
       it 'returns movable false' do
         expect(moves_calculator.space_available(candidate_space)).to eq({
@@ -266,7 +266,7 @@ RSpec.describe MovesCalculator do
     context 'if no other pieces are around' do
       let(:current_piece_placement){
         [
-          {"posx" => "1", "posy" => "1", "type" => "pawn", "side" => "red"}
+          {:posx => "1", :posy => "1", :type => "pawn", :side => "red"}
         ]
       }
       it "calls the right method" do
@@ -322,7 +322,7 @@ RSpec.describe MovesCalculator do
       "boardStack" => [],
       "walls" => [],
       "upgradeSquares" => []
-    }
+    }.deep_symbolize_keys
   }
   describe '#moves_for_bishop' do
     let(:focal_piece) { {:posx => 2,:posy => 2,:type => "bishop",:side => "red"} }
@@ -670,35 +670,35 @@ RSpec.describe MovesCalculator do
       ]}
   let(:starting_board) {
     {
-      "width" => 3, "height" => 3,
-      "boardStack" => [],
-      "walls" => [
+      :width => 3, :height => 3,
+      :boardStack => [],
+      :walls => [
         {
-          "posx" => "0",
-          "posy" => "0"
+          :posx => "0",
+          :posy => "0"
         },
         {
-          "posx" => "0",
-          "posy" => "1"
+          :posx => "0",
+          :posy => "1"
         },
         {
-          "posx" => "0",
-          "posy" => "2"
+          :posx => "0",
+          :posy => "2"
         },
         {
-          "posx" => "2",
-          "posy" => "0"
+          :posx => "2",
+          :posy => "0"
         },
         {
-          "posx" => "2",
-          "posy" => "1"
+          :posx => "2",
+          :posy => "1"
         },
         {
-          "posx" => "2",
-          "posy" => "2"
+          :posx => "2",
+          :posy => "2"
         },
       ],
-      "upgradeSquares" => []
+      :upgradeSquares => []
     }
   }
       it 'stops' do

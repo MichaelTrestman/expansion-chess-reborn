@@ -13,24 +13,35 @@ class MovesController < ApplicationController
     render :json => possible_moves
   end
 
-  def ai_pick_move
-    AI.pick_random_move(move_calculator_args)
+  def ai_move
+    move_tuple = AI.new(move_calculator_args).pick_best_move
+
+    focal_piece = move_tuple.first
+    move = move_tuple.last
+    new_piece_placement = BoardStateUpdater.new(
+      focal_piece: focal_piece,
+      current_piece_placement: current_piece_placement,
+      walls: walls,
+      upgrade_squares: upgrade_squares,
+      proposed_move: move
+    ).compute_new_piece_placement
+    push_board(new_piece_placement)
   end
 
   private
 
   def game_data
-    @game_data ||= firebase_client.get(move_params[:game_ref]).body
+    @game_data ||= firebase_client.get(move_params[:game_ref]).body.deep_symbolize_keys
     @game_data
   end
 
   def push_board( new_piece_placement)
 
     turn = current_turn
-    sides = game_data["playerSides"].keys
+    sides = game_data[:playerSides].keys.map(&:to_s)
     new_turn = sides.find{|x| x != turn }
 
-    board_stack = game_data["boardStack"]
+    board_stack = game_data[:boardStack]
     new_index = board_stack.length
 
     body = firebase_client.update('', {
@@ -60,7 +71,7 @@ class MovesController < ApplicationController
     "#{move_params[:game_ref]}/boardStack"
   end
   def current_piece_placement
-    game_data["boardStack"].last
+    game_data[:boardStack].last
   end
 
 
@@ -91,18 +102,18 @@ class MovesController < ApplicationController
   end
 
   def upgrade_squares
-    starting_board["upgradeSquares"]
+    starting_board[:upgradeSquares]
   end
 
   def starting_board
-    StartingBoards.get_board(move_params[:starting_board].to_sym)
+    StartingBoards.get_board(move_params[:starting_board].to_sym).deep_symbolize_keys
   end
   def current_turn
-    game_data["turn"]
+    game_data[:turn]
   end
 
   def move_calculator_args
-    @focal_piece = move_params[:chosen_piece]
+    @focal_piece = move_params[:chosen_piece].to_h.symbolize_keys
     {
       starting_board: starting_board,
       current_piece_placement: current_piece_placement,

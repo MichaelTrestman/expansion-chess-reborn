@@ -3,7 +3,7 @@ class MovesCalculator
   def initialize(args = {})
     @starting_board = args.fetch(:starting_board)
     @current_turn = args.fetch(:current_turn)
-    @current_piece_placement = args.fetch(:current_piece_placement).map(&:symbolize_keys)
+    @current_piece_placement = args.fetch(:current_piece_placement)
     @focal_piece = args.fetch(:focal_piece)
     @space_occupancy_registry = populate_space_occupancy_registry
     @move_set = []
@@ -16,8 +16,7 @@ class MovesCalculator
 
   def populate_space_occupancy_registry
     registry = {}
-    @starting_board['walls'].each do |wall|
-      wall = wall.symbolize_keys
+    @starting_board[:walls].each do |wall|
       registry[ wall[:posx].to_i ] = {} if registry[ wall[:posx].to_i ].nil?
       registry[ wall[:posx].to_i ][ wall[:posy].to_i ] = 'wall'
     end
@@ -98,8 +97,8 @@ class MovesCalculator
   def space_is_off_board candidate_space
     return true if candidate_space[:posx] < 0
     return true if candidate_space[:posy] < 0
-    return true if candidate_space[:posx] >= @starting_board["width"]
-    return true if candidate_space[:posy] >= @starting_board["height"]
+    return true if candidate_space[:posx] >= @starting_board[:width]
+    return true if candidate_space[:posy] >= @starting_board[:height]
     return false
   end
 
@@ -163,7 +162,7 @@ class MovesCalculator
 
     if space_is_off_board candidate_space
       response[:movable] = false
-    elsif @starting_board["walls"].map { |wall| wall.each{|k,v| wall[k.to_sym] = v.to_i }  }.include?({
+    elsif @starting_board[:walls].map { |wall| wall.each{|k,v| wall[k.to_sym] = v.to_i }  }.include?({
         posx: candidate_space[:posx],
         posy: candidate_space[:posy]
       })

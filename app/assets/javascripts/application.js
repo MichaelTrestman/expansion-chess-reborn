@@ -15,4 +15,10 @@
 //= require jquery
 //= require jquery_ujs
 //= require constants/pieceSVG.js
-//= require_tree .
+//= require BoardFunctions/boardFunctions.js
+//= require BoardFunctions/placePiece.js
+//= require BoardFunctions/buildBoardFromSnapshot.js
+//= require BoardFunctions/getMoveIfItIsAITurn.js
+//= require BoardFunctions/watchAndUpdateBoard.js
+//= require BoardFunctions/initializeHotKeys.js
+
