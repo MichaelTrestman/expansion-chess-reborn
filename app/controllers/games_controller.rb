@@ -1,4 +1,6 @@
 class GamesController < ApplicationController
+  require 'net/http'
+  require 'uri'
 
   def new
     @rails_env = ENV['RAILS_ENV']
@@ -18,7 +20,14 @@ class GamesController < ApplicationController
     @games = firebase_client.get("#{ENV['RAILS_ENV']}/games").body
   end
 
+
   def show
+    @game_path = "#{ENV['RAILS_ENV']}/games/#{params[:id]}"
+    url = URI.parse("#{firebase_client_data[:url]}/#{@game_path}")
+    response = Net::HTTP.get_response(uri)
+    game_data = GameParser.parse_game_state(response.body)
+  end
+  def xshow
     @game_path = "#{ENV['RAILS_ENV']}/games/#{params[:id]}"
     game_data = firebase_client.get(@game_path).body.deep_symbolize_keys
     raise "Missing Game" if game_data.nil?
@@ -30,11 +39,13 @@ class GamesController < ApplicationController
 
   private
 
-  def firebase_client
-    firebase_client_data = {
+  def firebase_client_data
+    {
       url: "https://xchess-a3561.firebaseio.com",
       private_key_json: File.open(ENV['PATH_TO_FB_KEY_JSON']).read
     }
+  end
+  def firebase_client
     @firebase = Firebase::Client.new(firebase_client_data[:url], firebase_client_data[:private_key_json])
   end
 

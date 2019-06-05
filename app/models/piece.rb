@@ -1,0 +1,1 @@
+Piece = Struct.new(:x, :y, :type, :side)

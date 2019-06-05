@@ -52,7 +52,7 @@ class AI
   end
 
   def pick_random_move
-    assemble_possible_moves.sample
+    assemble_possible_moves(@args).sample
   end
 
   def current_turn_pieces
