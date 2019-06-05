@@ -20,19 +20,10 @@ class GamesController < ApplicationController
     @games = firebase_client.get("#{ENV['RAILS_ENV']}/games").body
   end
 
-
   def show
     @game_path = "#{ENV['RAILS_ENV']}/games/#{params[:id]}"
-    url = URI.parse("#{firebase_client_data[:url]}/#{@game_path}")
-    response = Net::HTTP.get_response(uri)
-    game_data = GameParser.parse_game_state(response.body)
-  end
-  def xshow
-    @game_path = "#{ENV['RAILS_ENV']}/games/#{params[:id]}"
-    game_data = firebase_client.get(@game_path).body.deep_symbolize_keys
+    game_data = firebase_client.get(@game_path).body.symbolize_keys
     raise "Missing Game" if game_data.nil?
-    board_stack = game_data[:boardStack]
-    @current_board_state = board_stack.last
     @board_height = game_data[:height]
     @board_width = game_data[:width]
   end
