@@ -63,7 +63,7 @@ RSpec.describe AI do
 
   describe '#pick_best_move' do
     it "picks the best move it can calculate" do
-      puts ai.pick_best_move
+      puts ai.pick_best_move_no_lookahead
     end
   end
 end

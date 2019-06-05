@@ -14,7 +14,7 @@ class MovesController < ApplicationController
   end
 
   def ai_move
-    move_tuple = AI.new(move_calculator_args).pick_best_move
+    move_tuple = AI.new(move_calculator_args).pick_best_move_no_lookahead
 
     focal_piece = move_tuple.first
     move = move_tuple.last

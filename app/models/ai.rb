@@ -6,10 +6,9 @@ class AI
     @current_piece_placement = args.fetch(:current_piece_placement)
   end
 
-  def assemble_possible_moves
+  def assemble_possible_moves(args)
     all_tha_moves = []
     current_turn_pieces.each do |piece|
-      args = @args.clone
       args[:focal_piece] = piece
       this_piece_moves = MovesCalculator.new(args).calculate_moves
       this_piece_moves.each do |move|
@@ -19,8 +18,37 @@ class AI
     all_tha_moves
   end
 
-  def pick_best_move
-    assemble_possible_moves.sort_by{|x| value_for_move(x)}.last
+  def pick_the_best_move_lookahead_degree1
+    args = @args.clone
+    first_layer_of_moves = assemble_possible_moves(args)
+    move_with_best_worst_case = first_layer_of_moves.map do |move_info|
+
+      piece, move = move_info
+
+      these_bsu_args = {
+      focal_piece: piece,
+      current_piece_placement: @current_piece_placement,
+      upgrade_squares: @starting_board.fetch(:upgradeSquares),
+      proposed_move: move
+      }
+
+
+      new_args = args.clone
+      new_args[:current_piece_placement] = BoardStateUpdater.new(these_bsu_args).compute_new_piece_placement
+
+      worst_case = value_for_move(pick_worst_move_no_lookahead new_args)
+
+      [piece, move, worst_case]
+    end.sort_by{|move| move.last }.max
+    move_with_best_worst_case
+  end
+
+  def pick_worst_move_no_lookahead args
+    assemble_possible_moves(args).sort_by{|x| value_for_move(x)}.first
+  end
+  def pick_best_move_no_lookahead
+    args = @args.clone
+    assemble_possible_moves(args).sort_by{|x| value_for_move(x)}.last
   end
 
   def pick_random_move

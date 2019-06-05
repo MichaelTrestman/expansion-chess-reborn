@@ -37,6 +37,11 @@ class BoardStateUpdater
     end
 
     new_piece_placement << focal_piece_after_move
+
+    if !!@proposed_move[:killed_piece]
+      raise 'failed to remove dead piece' unless new_piece_placement.count < @current_piece_placement.count
+    end
+
     new_piece_placement
   end
 
