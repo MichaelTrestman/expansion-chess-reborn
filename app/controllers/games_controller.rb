@@ -8,19 +8,29 @@ class GamesController < ApplicationController
   def create
     board = starting_board
     board[:lastUpdate] = Time.now
-    response = firebase_client.push("#{ENV['RAILS_ENV']}/games", board)
-    id = response.body["name"]
+    id = games_db.insert_one(board).inserted_ids.first.to_s
+    # response = firebase_client.push("#{ENV['RAILS_ENV']}/games", board)
+    # id = response.body["name"]
     redirect_to :action => "show", :id => id
   end
 
+  def mongo_data
+    id = params['game_id']
 
+    game_data = games_db.find({_id: BSON::ObjectId(id)}).first
+    render :json => game_data
+  end
   def index
-    @games = firebase_client.get("#{ENV['RAILS_ENV']}/games").body
+    @games = games_db.find.to_a
+    # @games = firebase_client.get("#{ENV['RAILS_ENV']}/games").body
   end
 
   def show
-    @game_path = "#{ENV['RAILS_ENV']}/games/#{params[:id]}"
-    game_data = firebase_client.get(@game_path).body.deep_symbolize_keys
+    # @game_path = "#{ENV['RAILS_ENV']}/games/#{params[:id]}"
+    # game_data = firebase_client.get(@game_path).body.deep_symbolize_keys
+    @id = params[:id]
+    game_data = games_db.find({_id: BSON::ObjectId(@id)}).first
+
     raise "Missing Game" if game_data.nil?
     board_stack = game_data[:boardStack]
     @current_board_state = board_stack.last
@@ -30,6 +40,10 @@ class GamesController < ApplicationController
 
   private
 
+
+  def games_db
+    @games_db ||= Mongo::Client.new([ '127.0.0.1:27017' ], :database => 'dev').database[:games]
+  end
   def firebase_client
     firebase_client_data = {
       url: "https://xchess-a3561.firebaseio.com",

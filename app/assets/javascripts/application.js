@@ -20,5 +20,6 @@
 //= require BoardFunctions/buildBoardFromSnapshot.js
 //= require BoardFunctions/getMoveIfItIsAITurn.js
 //= require BoardFunctions/watchAndUpdateBoard.js
+//= require BoardFunctions/buildBoardFromMongo.js
 //= require BoardFunctions/initializeHotKeys.js
 

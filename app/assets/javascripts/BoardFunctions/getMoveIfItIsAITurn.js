@@ -1,4 +1,6 @@
 BoardFunctions.getMoveIfItIsAITurn = function(){
+  console.log('beep boop')
+  console.log(BoardFunctions.playerSides[BoardFunctions.turn])
   if (BoardFunctions.playerSides[BoardFunctions.turn] == 'ai'){
 
     var ai_move_data = {

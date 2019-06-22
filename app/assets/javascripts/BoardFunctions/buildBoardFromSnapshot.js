@@ -82,7 +82,7 @@ BoardFunctions.getMoves = function(startingBoardName, currentPiecePositions, sel
     move_data: {
       starting_board: startingBoardName,
       chosen_piece: selectedPiece,
-      game_ref: BoardFunctions.gameRef
+      game_ref: BoardFunctions.gameId
     }
   }
 
@@ -174,7 +174,7 @@ BoardFunctions.makeMovable = function(_, move){
           move_data: {
             starting_board: BoardFunctions.startingBoardName,
             chosen_piece: BoardFunctions.selectedPieceData,
-            game_ref: BoardFunctions.gameRef,
+            game_ref: BoardFunctions.gameId,
             proposed_move: proposed_move
           }
         }
@@ -190,6 +190,7 @@ BoardFunctions.makeMovable = function(_, move){
           success: function(result){
             console.log("worked i guess?")
             console.log(result)
+            BoardFunctions.getDataAndTriggerRebuildFromMongo(BoardFunctions.gameId);
           },
           failure: function(r){
             alert('failed to get any ajaxes :(')

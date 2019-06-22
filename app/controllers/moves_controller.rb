@@ -30,7 +30,18 @@ class MovesController < ApplicationController
 
   private
 
+
+
   def game_data
+    @id = move_params[:game_ref]
+
+    @game_data ||= games_db.find({_id: BSON::ObjectId(@id)}).first
+    @game_data.deep_symbolize_keys
+  end
+  def games_db
+    @games_db ||= Mongo::Client.new([ '127.0.0.1:27017' ], :database => 'dev').database[:games]
+  end
+  def xgame_data
     @game_data ||= firebase_client.get(move_params[:game_ref]).body.deep_symbolize_keys
     @game_data
   end
@@ -42,13 +53,18 @@ class MovesController < ApplicationController
     new_turn = sides.find{|x| x != turn }
 
     board_stack = game_data[:boardStack]
+    board_stack = [new_piece_placement]
     new_index = board_stack.length
 
-    body = firebase_client.update('', {
-      "#{boardStack_ref}/#{new_index}" => new_piece_placement,
-      "#{move_params[:game_ref]}/turn" => new_turn,
-      "#{move_params[:game_ref]}/lastUpdate" => Time.new
-    }).body.symbolize_keys
+    game = games_db.find({_id: BSON::ObjectId(@id)})
+    game.find_one_and_update('$set' => {boardStack: board_stack})
+    game.find_one_and_update('$set' => {turn: new_turn})
+
+    # body = firebase_client.update('', {
+    #   "#{boardStack_ref}/#{new_index}" => new_piece_placement,
+    #   "#{move_params[:game_ref]}/turn" => new_turn,
+    #   "#{move_params[:game_ref]}/lastUpdate" => Time.new
+    # }).body.symbolize_keys
 
 
   end
