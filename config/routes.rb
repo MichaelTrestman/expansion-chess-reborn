@@ -13,6 +13,8 @@ Rails.application.routes.draw do
 
     match '/submit_move', to: MovesController.action(:submit_move), via: [:post]
 
+    match '/take_back_last_move', to: MovesController.action(:take_back_last_move), via: [:post]
+
     match '/mongo_data', to: GamesController.action(:mongo_data), via: [:get]
   end
 

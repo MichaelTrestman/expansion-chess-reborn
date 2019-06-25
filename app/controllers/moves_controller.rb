@@ -8,6 +8,10 @@ class MovesController < ApplicationController
     end
   end
 
+  def take_back_last_move
+    push_board( nil, true )
+  end
+
   def calculate_moves
     possible_moves = new_move_calculator.calculate_moves
     render :json => possible_moves
@@ -35,36 +39,29 @@ class MovesController < ApplicationController
   def game_data
     @id = move_params[:game_ref]
 
-    @game_data ||= games_db.find({_id: BSON::ObjectId(@id)}).first
-    @game_data.deep_symbolize_keys
+    @game_data ||= games_db.find({_id: BSON::ObjectId(@id)}).first.deep_symbolize_keys
   end
   def games_db
     @games_db ||= Mongo::Client.new([ '127.0.0.1:27017' ], :database => 'dev').database[:games]
   end
-  def xgame_data
-    @game_data ||= firebase_client.get(move_params[:game_ref]).body.deep_symbolize_keys
-    @game_data
-  end
 
-  def push_board( new_piece_placement)
+  def push_board( new_piece_placement, take_back=false)
 
     turn = current_turn
     sides = game_data[:playerSides].keys.map(&:to_s)
     new_turn = sides.find{|x| x != turn }
 
     board_stack = game_data[:boardStack]
-    board_stack = [new_piece_placement]
-    new_index = board_stack.length
+
+    if take_back
+      board_stack.pop
+    else
+      board_stack << new_piece_placement
+    end
 
     game = games_db.find({_id: BSON::ObjectId(@id)})
     game.find_one_and_update('$set' => {boardStack: board_stack})
     game.find_one_and_update('$set' => {turn: new_turn})
-
-    # body = firebase_client.update('', {
-    #   "#{boardStack_ref}/#{new_index}" => new_piece_placement,
-    #   "#{move_params[:game_ref]}/turn" => new_turn,
-    #   "#{move_params[:game_ref]}/lastUpdate" => Time.new
-    # }).body.symbolize_keys
 
 
   end
@@ -138,11 +135,4 @@ class MovesController < ApplicationController
     }
   end
 
-  def firebase_client
-    firebase_client_data = {
-      url: "https://xchess-a3561.firebaseio.com",
-      private_key_json: File.open(ENV['PATH_TO_FB_KEY_JSON']).read
-    }
-    @firebase = Firebase::Client.new(firebase_client_data[:url], firebase_client_data[:private_key_json])
-  end
 end

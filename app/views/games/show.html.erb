@@ -27,7 +27,6 @@ zoom: [,] <br>
 
   $('#board').css('transform', 'scale(1,1)');
   BoardFunctions.gameRef = '<%= @game_path %>'
-  // BoardFunctions.watchAndUpdateBoard(BoardFunctions.gameRef)
   BoardFunctions.gameId = "<%= @id %>"
   BoardFunctions.watchAndbuildBoardFromMongo(BoardFunctions.gameId);
   BoardFunctions.getDataAndTriggerRebuildFromMongo(BoardFunctions.gameId);

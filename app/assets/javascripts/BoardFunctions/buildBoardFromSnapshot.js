@@ -178,9 +178,6 @@ BoardFunctions.makeMovable = function(_, move){
             proposed_move: proposed_move
           }
         }
-        movestring = JSON.stringify(moveData)
-        console.log('movestring')
-        console.log(movestring);
 
         $.ajax({
           url: submitMoveEndpoint,
