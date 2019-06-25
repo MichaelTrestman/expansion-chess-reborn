@@ -2,8 +2,8 @@
 <%= link_to("Create new game", '/games/new.html') %>
 <% (@games || []).each do |game| %>
 <br>
-  Game: <%= game.extract_id %>
-  <%= link_to('Play', "/games/#{game.extract_id}") %>
+  Game: <%= game['_id'].to_s %>
+  <%= link_to('Play', "/games/#{game['_id'].to_s}") %>
   Last update: <%= game["lastUpdate"] || "time unavailable" %><br>
   played on: <%= game["starting board name"] || "board name unavailable" %><br>
   Players: <br>
