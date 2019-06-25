@@ -39,7 +39,7 @@ class MovesController < ApplicationController
   def game_data
     @id = move_params[:game_ref]
 
-    @game_data ||= games_db.find({_id: BSON::ObjectId(@id)}).first
+    @game_data ||= games_db.find({_id: BSON::ObjectId(@id)}).first.deep_symbolize_keys
   end
 
   def push_board( new_piece_placement, take_back=false)

@@ -2,7 +2,7 @@ module GameData
   extend ActiveSupport::Concern
 
   def games_db
-    @games_db ||= Mongo::Client.new([ '127.0.0.1:27017' ], :database => 'dev').database[:games]
+    @games_db ||= Mongo::Client.new([ 'xchess-mongo-db:27017' ], :database => 'dev').database[:games]
   end
 
   def starting_board
