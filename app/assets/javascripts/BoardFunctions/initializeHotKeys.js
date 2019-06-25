@@ -5,7 +5,13 @@ BoardFunctions.initializeHotKeys = function(){
     var key = e.keyCode
     console.log(key)
     var $board = $('#board')
-    if (key == 93) {
+    if (key == 116) {
+      console.log('taking it back');
+      if (confirm("do you want to take back your move?")){
+        BoardFunctions.hitTakeBackEndpoint();
+      }
+
+    } else if (key == 93) {
 
       var currentScale = $board.css('transform')
 
@@ -20,11 +26,6 @@ BoardFunctions.initializeHotKeys = function(){
       yScale = ( yScale + 0.05 ).toString();
 
       $board.css('transform', 'scale(' + xScale + ',' + yScale + ')')
-    } else if (key==92){
-      console.log('reloading some shiz')
-      firebase.database().ref(BoardFunctions.gameRef)
-          .once('value', BoardFunctions.buildBoardFromSnapshot);
-
     } else if (key==88 || key ==120){
       BoardFunctions.clearMoves();
     } else if (key == 91) {

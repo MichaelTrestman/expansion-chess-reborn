@@ -1,0 +1,20 @@
+current directory: /Users/michaeltrestman/workspace/xchess/vendor/bundle/ruby/2.3.0/gems/bson-4.5.0/ext/bson
+/System/Library/Frameworks/Ruby.framework/Versions/2.3/usr/bin/ruby -r ./siteconf20190606-23037-1w0rwi0.rb extconf.rb
+creating Makefile
+
+current directory: /Users/michaeltrestman/workspace/xchess/vendor/bundle/ruby/2.3.0/gems/bson-4.5.0/ext/bson
+make "DESTDIR=" clean
+
+current directory: /Users/michaeltrestman/workspace/xchess/vendor/bundle/ruby/2.3.0/gems/bson-4.5.0/ext/bson
+make "DESTDIR="
+compiling bson_native.c
+In file included from bson_native.c:21:
+./native-endian.h:196:15: warning: unused function '__bson_double_swap_slow' [-Wunused-function]
+static double __bson_double_swap_slow(double v)
+              ^
+1 warning generated.
+linking shared-object bson_native.bundle
+
+current directory: /Users/michaeltrestman/workspace/xchess/vendor/bundle/ruby/2.3.0/gems/bson-4.5.0/ext/bson
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 bson_native.bundle ./.gem.20190606-23037-k65m3
