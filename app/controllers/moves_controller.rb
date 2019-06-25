@@ -1,5 +1,7 @@
 class MovesController < ApplicationController
 
+  include GameData
+
   def submit_move
     if new_move_calculator.move_is_valid?(proposed_move)
       push_board( compute_new_piece_placement )
@@ -34,15 +36,10 @@ class MovesController < ApplicationController
 
   private
 
-
-
   def game_data
     @id = move_params[:game_ref]
 
-    @game_data ||= games_db.find({_id: BSON::ObjectId(@id)}).first.deep_symbolize_keys
-  end
-  def games_db
-    @games_db ||= Mongo::Client.new([ '127.0.0.1:27017' ], :database => 'dev').database[:games]
+    @game_data ||= games_db.find({_id: BSON::ObjectId(@id)}).first
   end
 
   def push_board( new_piece_placement, take_back=false)
