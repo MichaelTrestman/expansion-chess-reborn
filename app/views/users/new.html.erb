@@ -1,0 +1,25 @@
+<h2> Create Account</h2>
+<% if flash[:error] %>
+  <%= flash[:error] %>
+<% end %>
+<%= form_tag "/users", method: :post do%>
+ <div>
+  <%= label_tag :name%>
+  <%= text_field_tag "user_data[name]" %>
+ </div>
+ <div>
+  <%= label_tag :email%>
+  <%= text_field_tag "user_data[email]" %>
+ </div>
+ <div>
+  <%= label_tag :password%>
+  <%= password_field_tag "user_data[password]" %>
+ </div>
+ <div>
+  <%= label_tag :password_confirmation%>
+  <%= password_field_tag "user_data[password_confirmation]" %>
+ </div>
+
+<%= submit_tag "Sign Up" %>
+<%end%>
+<%= link_to('Sign in with existing account', login_path) %>

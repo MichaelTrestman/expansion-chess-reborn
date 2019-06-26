@@ -1,0 +1,16 @@
+<h2> Sign in </h2>
+<% if flash[:error] %>
+  <%= flash[:error] %>
+<% end %>
+<%= form_tag "/sessions", method: :post do%>
+ <div>
+  <%= label_tag :email%>
+  <%= text_field_tag "user_data[email]" %>
+ </div>
+ <div>
+  <%= label_tag :password%>
+  <%= password_field_tag "user_data[password]" %>
+ </div>
+<%= submit_tag "Sign in" %>
+<%end%>
+<%= link_to('Sign up', signup_path) %>

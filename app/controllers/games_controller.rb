@@ -1,6 +1,13 @@
 class GamesController < ApplicationController
 
   include GameData
+  before_action :authenticate_user
+
+  def authenticate_user
+
+    redirect_to login_path if session[:user_id].nil?
+
+  end
 
   def new
     @rails_env = ENV['RAILS_ENV']

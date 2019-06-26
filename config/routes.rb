@@ -4,6 +4,11 @@ Rails.application.routes.draw do
 
   resources :games, only: [:index, :show, :new, :create]
 
+  get 'login' => 'sessions#new'
+  post 'sessions' => 'sessions#create'
+  get 'signup' => 'users#new'
+  post 'users' => 'users#create'
+
 
   defaults format: :json do
 
