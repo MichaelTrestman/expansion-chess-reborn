@@ -11,8 +11,8 @@ class SessionsController < ApplicationController
     end
 
     session[:user_id] = u.id
-    session[:name] = u.name
-    session[:email] = u.email
+    session[:user_name] = u.name
+    session[:user_email] = u.email
     redirect_to games_path
   end
 

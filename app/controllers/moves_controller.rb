@@ -32,6 +32,8 @@ class MovesController < ApplicationController
       proposed_move: move
     ).compute_new_piece_placement
     push_board(new_piece_placement)
+    redirect_to controller: 'games', action: 'show', id: move_params[:game_ref]
+
   end
 
   private

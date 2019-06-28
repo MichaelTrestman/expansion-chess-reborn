@@ -26,7 +26,6 @@ BoardFunctions.getMoveIfItIsAITurn = function(){
     })
 
 
-
-
+    BoardFunctions.getDataAndTriggerRebuildFromMongo(BoardFunctions.gameRef)
   }
 }

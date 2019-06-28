@@ -4,6 +4,9 @@
 <div id="left-sidebar">
 
 <h2>XChess!</h2>
+<h3> welcome <%= session[:name] %> </h3>
+<p>playing black: <%= @playerSides[:black] %> </p>
+<p>playing white: <%= @playerSides[:white] %> </p>
 <p>instructions: <br><br>
 pan: w,a,s,d <br>
 zoom: [,] <br>
