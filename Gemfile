@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.3.7'
+gem 'google-cloud-pubsub'
 gem 'mongo'
 gem 'bson_ext'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
