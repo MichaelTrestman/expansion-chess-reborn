@@ -1,0 +1,22 @@
+current directory: /Users/michaeltrestman/workspace/expansion-chess-reborn/vendor/bundle/ruby/3.2.0/gems/byebug-11.1.3/ext/byebug
+/Users/michaeltrestman/.rubies/ruby-3.2.2/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /Users/michaeltrestman/workspace/expansion-chess-reborn/vendor/bundle/ruby/3.2.0/gems/byebug-11.1.3/ext/byebug
+make DESTDIR\= sitearchdir\=./.gem.20240215-24796-cymqev sitelibdir\=./.gem.20240215-24796-cymqev clean
+
+current directory: /Users/michaeltrestman/workspace/expansion-chess-reborn/vendor/bundle/ruby/3.2.0/gems/byebug-11.1.3/ext/byebug
+make DESTDIR\= sitearchdir\=./.gem.20240215-24796-cymqev sitelibdir\=./.gem.20240215-24796-cymqev
+compiling breakpoint.c
+compiling byebug.c
+compiling context.c
+compiling locker.c
+compiling threads.c
+linking shared-object byebug/byebug.bundle
+
+current directory: /Users/michaeltrestman/workspace/expansion-chess-reborn/vendor/bundle/ruby/3.2.0/gems/byebug-11.1.3/ext/byebug
+make DESTDIR\= sitearchdir\=./.gem.20240215-24796-cymqev sitelibdir\=./.gem.20240215-24796-cymqev install
+/usr/bin/install -c -m 0755 byebug.bundle ./.gem.20240215-24796-cymqev/byebug
+
+current directory: /Users/michaeltrestman/workspace/expansion-chess-reborn/vendor/bundle/ruby/3.2.0/gems/byebug-11.1.3/ext/byebug
+make DESTDIR\= sitearchdir\=./.gem.20240215-24796-cymqev sitelibdir\=./.gem.20240215-24796-cymqev clean

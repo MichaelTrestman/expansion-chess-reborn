@@ -1,17 +1,31 @@
-FROM ruby:2.3.7
+# Use the official Ruby 2.7 image based on Debian Buster
+FROM ruby:3.2.2
 
-WORKDIR  /app
+# Set environment variable to avoid interactive prompts during package installation
+ENV DEBIAN_FRONTEND=noninteractive
 
+# Set the working directory
+WORKDIR /app
+
+# Install necessary packages
+RUN apt-get update -qq \
+    && apt-get install -y --no-install-recommends \
+        build-essential \
+        nodejs \
+        vim \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Bundler
+RUN gem install bundler -v '2.3.0'
+
+# Copy the application code to the container
 COPY . /app
 
-#RUN printf "deb http://archive.debian.org/debian/ jessie main\ndeb-src http://archive.debian.org/debian/ jessie main\ndeb http://security.debian.org jessie/updates main\ndeb-src http://security.debian.org jessie/updates main" > /etc/apt/sources.list
-RUN apt-get update -qq && apt-get -y upgrade && apt-get -y dist-upgrade && apt-get install -y build-essential
-
-# for a JS runtime
-RUN apt-get install -y nodejs
-
-RUN apt-get install -y vim
-RUN gem update bundler
+# Install gem dependencies
 RUN bundle install --path vendor/bundle
+
+# Expose port 3000
 EXPOSE 3000
 
+# Set the default command to run your application
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]

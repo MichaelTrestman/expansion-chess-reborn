@@ -1,4 +1,4 @@
-class AI
+class Ai
   def initialize(args = {})
     @args = args
     @starting_board = args.fetch(:starting_board)

@@ -1,0 +1,34 @@
+current directory: /Users/michaeltrestman/workspace/expansion-chess-reborn/vendor/bundle/ruby/3.2.0/gems/bson_ext-1.12.5/ext/cbson
+/Users/michaeltrestman/.rubies/ruby-3.2.2/bin/ruby extconf.rb
+checking for asprintf()... yes
+checking for ruby/st.h... yes
+checking for ruby/regex.h... yes
+checking for ruby/encoding.h... yes
+creating Makefile
+
+current directory: /Users/michaeltrestman/workspace/expansion-chess-reborn/vendor/bundle/ruby/3.2.0/gems/bson_ext-1.12.5/ext/cbson
+make DESTDIR\= sitearchdir\=./.gem.20240215-24796-4bg1ke sitelibdir\=./.gem.20240215-24796-4bg1ke clean
+
+current directory: /Users/michaeltrestman/workspace/expansion-chess-reborn/vendor/bundle/ruby/3.2.0/gems/bson_ext-1.12.5/ext/cbson
+make DESTDIR\= sitearchdir\=./.gem.20240215-24796-4bg1ke sitelibdir\=./.gem.20240215-24796-4bg1ke
+compiling bson_buffer.c
+compiling cbson.c
+cbson.c:55:5: warning: 'HAVE_ST_H' is not defined, evaluates to 0 [-Wundef]
+#if HAVE_ST_H
+    ^
+cbson.c:62:5: warning: 'HAVE_REGEX_H' is not defined, evaluates to 0 [-Wundef]
+#if HAVE_REGEX_H
+    ^
+cbson.c:843:17: warning: 'RUBY_API_VERSION_CODE' is not defined, evaluates to 0 [-Wundef]
+            #if RUBY_API_VERSION_CODE >= 10900
+                ^
+3 warnings generated.
+compiling encoding_helpers.c
+linking shared-object bson_ext/cbson.bundle
+
+current directory: /Users/michaeltrestman/workspace/expansion-chess-reborn/vendor/bundle/ruby/3.2.0/gems/bson_ext-1.12.5/ext/cbson
+make DESTDIR\= sitearchdir\=./.gem.20240215-24796-4bg1ke sitelibdir\=./.gem.20240215-24796-4bg1ke install
+/usr/bin/install -c -m 0755 cbson.bundle ./.gem.20240215-24796-4bg1ke/bson_ext
+
+current directory: /Users/michaeltrestman/workspace/expansion-chess-reborn/vendor/bundle/ruby/3.2.0/gems/bson_ext-1.12.5/ext/cbson
+make DESTDIR\= sitearchdir\=./.gem.20240215-24796-4bg1ke sitelibdir\=./.gem.20240215-24796-4bg1ke clean

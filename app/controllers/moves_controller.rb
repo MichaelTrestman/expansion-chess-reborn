@@ -20,7 +20,7 @@ class MovesController < ApplicationController
   end
 
   def ai_move
-    move_tuple = AI.new(move_calculator_args).pick_best_move_no_lookahead
+    move_tuple = Ai.new(move_calculator_args).pick_best_move_no_lookahead
 
     focal_piece = move_tuple.first
     move = move_tuple.last
@@ -116,7 +116,7 @@ class MovesController < ApplicationController
   end
 
   def starting_board
-    StartingBoards.get_board(move_params[:starting_board].to_sym).deep_symbolize_keys
+    StartingBoards.get_board(move_params[:starting_board].to_sym)
   end
   def current_turn
     game_data[:turn]

@@ -1,53 +1,42 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.3.7'
+ruby '3.2.2'
+
 gem 'mongo'
-gem 'bson_ext'
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.3'
-gem 'rspec-rails'
+# Remove 'bson_ext' as it's deprecated and merged into 'mongo' gem
+# gem 'bson_ext'
+
+gem 'rails', '~> 6.1.0'
+gem 'rspec-rails', '~> 5.0' # Update for Rails 6 compatibility
 gem 'jquery-rails'
-# Use Puma as the app server
-gem 'puma', '~> 3.11'
-# Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
-# Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
-# See https://github.com/rails/execjs#readme for more supported runtimes
-# gem 'mini_racer', platforms: :ruby
 
-# Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.2'
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
+# Use Puma 5.x for compatibility with Rails 6 and Ruby 3
+gem 'puma', '~> 5.0'
+
+# Replace 'sass-rails' with 'sassc-rails' as 'sass-rails' is deprecated
+gem 'sassc-rails', '>= 2.1.0'
+
+gem 'uglifier', '>= 4.2.0' # Ensure it's compatible with ES6 if needed
+
+# Consider removing 'coffee-rails' if not using CoffeeScript
+# gem 'coffee-rails', '~> 5.0'
+
 gem 'turbolinks', '~> 5'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.5'
-# Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'jbuilder', '~> 2.11' # Update to the latest version
 
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
-# Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.1.0', require: false
+gem 'bootsnap', '>= 1.7.0', require: false # Update for Ruby 3 compatibility
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'rspec-rails', '~> 5.0' # Ensure it's in the right group
 end
 
 group :development do
-  # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem 'web-console', '>= 3.3.0'
-  gem 'listen', '>= 3.0.5', '< 3.2'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'web-console', '>= 4.1.0' # Update for Rails 6
+  gem 'listen', '~> 3.3' # Update for compatibility
   gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'spring-watcher-listen', '~> 2.0.1'
 end
-
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'coffee-rails', '~> 5.0'
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

@@ -1,0 +1,18 @@
+current directory: /Users/michaeltrestman/workspace/expansion-chess-reborn/vendor/bundle/ruby/3.2.0/gems/racc-1.7.3/ext/racc/cparse
+/Users/michaeltrestman/.rubies/ruby-3.2.2/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /Users/michaeltrestman/workspace/expansion-chess-reborn/vendor/bundle/ruby/3.2.0/gems/racc-1.7.3/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20240215-24796-7ow8w6 sitelibdir\=./.gem.20240215-24796-7ow8w6 clean
+
+current directory: /Users/michaeltrestman/workspace/expansion-chess-reborn/vendor/bundle/ruby/3.2.0/gems/racc-1.7.3/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20240215-24796-7ow8w6 sitelibdir\=./.gem.20240215-24796-7ow8w6
+compiling cparse.c
+linking shared-object racc/cparse.bundle
+
+current directory: /Users/michaeltrestman/workspace/expansion-chess-reborn/vendor/bundle/ruby/3.2.0/gems/racc-1.7.3/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20240215-24796-7ow8w6 sitelibdir\=./.gem.20240215-24796-7ow8w6 install
+/usr/bin/install -c -m 0755 cparse.bundle ./.gem.20240215-24796-7ow8w6/racc
+
+current directory: /Users/michaeltrestman/workspace/expansion-chess-reborn/vendor/bundle/ruby/3.2.0/gems/racc-1.7.3/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20240215-24796-7ow8w6 sitelibdir\=./.gem.20240215-24796-7ow8w6 clean

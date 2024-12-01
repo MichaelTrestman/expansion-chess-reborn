@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: myapp_container
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./app:/app/app
+      - ./config:/app/config
+      - ./lib:/app/lib
+      - ./public:/app/public
+      - ./db:/app/db
+      - myapp_bundle:/bundle
+    networks:
+      - xchess-network
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_HOST=xchess-mongo-db
+      - MONGO_PORT=27017
+      - MONGO_DB=dev
+      - BUNDLE_PATH=/bundle
+      - GEM_HOME=/bundle
+      - PATH=/bundle/bin:$PATH
+
+  mongo:
+    image: mongo:6.0
+    container_name: xchess-mongo-db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodata:/data/db
+    networks:
+      - xchess-network
+
+networks:
+  xchess-network:
+
+volumes:
+  myapp_bundle:
+  mongodata:
