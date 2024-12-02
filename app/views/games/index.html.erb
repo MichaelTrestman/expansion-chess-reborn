@@ -7,10 +7,11 @@
   Last update: <%= game["lastUpdate"] || "time unavailable" %><br>
   played on: <%= game["starting board name"] || "board name unavailable" %><br>
   Players: <br>
-  <% game["playerSides"].each do |side, player| %>
-    <%= player %>, playing <%= side %><br>
+  <% if game["playerSides"]%>
+    <% game["playerSides"].each do |side, player| %>
+      <%= player %>, playing <%= side %><br>
 
-  <% end %>
-
+    <% end %>
+  <%end%>
 
 <% end %>

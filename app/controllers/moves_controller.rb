@@ -46,7 +46,12 @@ class MovesController < ApplicationController
 
     turn = current_turn
     sides = game_data[:playerSides].keys.map(&:to_s)
-    new_turn = sides.find{|x| x != turn }
+    
+
+
+    # new_turn = sides.find{|x| x != turn }
+
+    new_turn = sides[(sides.index(turn) + 1) % sides.length]
 
     board_stack = game_data[:boardStack]
 
