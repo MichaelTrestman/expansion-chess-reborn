@@ -1,8 +1,4 @@
-<h1>Games#show</h1>
-
-
 <div id="left-sidebar">
-
 <h2>XChess!</h2>
 <p>instructions: <br><br>
 pan: w,a,s,d <br>
@@ -23,6 +19,7 @@ zoom: [,] <br>
 </div>
 
 <script type="text/javascript">
+  $(document).ready(function() {
   BoardFunctions.base_url = '<%= request.base_url %>'
 
   $('#board').css('transform', 'scale(1,1)');
@@ -31,4 +28,7 @@ zoom: [,] <br>
   BoardFunctions.watchAndbuildBoardFromMongo(BoardFunctions.gameId);
   BoardFunctions.getDataAndTriggerRebuildFromMongo(BoardFunctions.gameId);
   BoardFunctions.initializeHotKeys();
+  BoardFunctions.setTurn();
+});
+
 </script>

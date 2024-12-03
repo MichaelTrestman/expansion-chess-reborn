@@ -51,3 +51,40 @@
 .square.wall {
   background-color: rgba(102,51,0,1);
 }
+/* CSS for the left sidebar */
+#left-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 220px; /* Adjust the width as needed */
+    height: 100%;
+    background-color: #f0f0f0; /* Optional background color */
+    padding: 20px; /* Optional padding */
+    box-sizing: border-box;
+    overflow-y: auto; /* Add scroll if content overflows */
+}
+
+/* CSS for the board */
+#board {
+    margin-left: 260px; /* Sidebar width (220px) + padding (2 * 20px) */
+    /* Other styles as needed */
+}
+
+/* Optional: Style for the board rows and squares */
+.row {
+    clear: both; /* Ensure rows don't wrap */
+}
+
+.square {
+    float: left;
+    width: 100px;  /* Adjust as needed */
+    height: 100px; /* Adjust as needed */
+}
+
+.light {
+    background-color: #f0d9b5; /* Light square color */
+}
+
+.dark {
+    background-color: #b58863; /* Dark square color */
+}

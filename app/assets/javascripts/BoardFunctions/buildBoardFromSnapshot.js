@@ -39,6 +39,10 @@ BoardFunctions.loadPieces = function(pieces){
 BoardFunctions.setTurn = function(playerWhosTurn) {
   BoardFunctions.turn = playerWhosTurn;
   $('#turn-indicator').text(playerWhosTurn);
+  // $('#board').css("border: solid 50px " + playerWhosTurn + ";")
+  $('#board').css('border', 'solid 10px ' + playerWhosTurn);
+  $('#left-sidebar').css('background', playerWhosTurn);
+  console.log(('border', 'solid 2%' + playerWhosTurn + ';'))
 }
 
 BoardFunctions.initializeSquares = function(){
@@ -97,7 +101,7 @@ BoardFunctions.getMoves = function(startingBoardName, currentPiecePositions, sel
       $.each(result, BoardFunctions.makeMovable);
     },
     failure: function(r){
-      alert('failed to get any ajaxes :(')
+
     }
   })
 
@@ -190,7 +194,7 @@ BoardFunctions.makeMovable = function(_, move){
             BoardFunctions.getDataAndTriggerRebuildFromMongo(BoardFunctions.gameId);
           },
           failure: function(r){
-            alert('failed to get any ajaxes :(')
+            
           }
         })
         $('.pendingPiece').removeClass('pendingPiece');
