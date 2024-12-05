@@ -3,11 +3,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.2.2'
 
-gem 'mongo'
-# Remove 'bson_ext' as it's deprecated and merged into 'mongo' gem
-# gem 'bson_ext'
-
 gem 'rails', '~> 6.1.0'
+gem 'mongo' # Retained for your chess logic
 gem 'rspec-rails', '~> 5.0' # Update for Rails 6 compatibility
 gem 'jquery-rails'
 
@@ -19,13 +16,22 @@ gem 'sassc-rails', '>= 2.1.0'
 
 gem 'uglifier', '>= 4.2.0' # Ensure it's compatible with ES6 if needed
 
-# Consider removing 'coffee-rails' if not using CoffeeScript
-# gem 'coffee-rails', '~> 5.0'
+# Keep 'coffee-rails' if you're using CoffeeScript
+gem 'coffee-rails', '~> 5.0'
 
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.11' # Update to the latest version
 
 gem 'bootsnap', '>= 1.7.0', require: false # Update for Ruby 3 compatibility
+
+# Add PostgreSQL adapter
+gem 'pg', '~> 1.2'
+
+# Add Devise for authentication
+gem 'devise'
+
+# Add bcrypt for secure password hashing
+gem 'bcrypt', '~> 3.1.7'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
@@ -38,5 +44,5 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.1'
 end
-gem 'coffee-rails', '~> 5.0'
+
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

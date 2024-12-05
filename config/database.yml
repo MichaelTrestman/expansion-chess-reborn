@@ -1,0 +1,22 @@
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: your_postgres_username
+  password: your_postgres_password
+  host: localhost
+
+development:
+  <<: *default
+  database: chess_app_development
+
+test:
+  <<: *default
+  database: chess_app_test
+
+production:
+  <<: *default
+  database: chess_app_production
+  username: chess_app
+  password: <%= ENV['CHESS_APP_DATABASE_PASSWORD'] %>

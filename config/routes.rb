@@ -1,11 +1,13 @@
 Rails.application.routes.draw do
 
+  devise_for :users
   match '/', to: GamesController.action(:index), via: [:get]
 
   resources :games, only: [:index, :show, :new, :create]
 
 
   defaults format: :json do
+    match '/', to: GamesController.action(:index), via: [:get]
 
     match '/calculate_moves', to: MovesController.action(:calculate_moves), via: [:get]
 

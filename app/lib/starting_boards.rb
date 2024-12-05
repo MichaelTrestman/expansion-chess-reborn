@@ -10,11 +10,13 @@ class StartingBoards
     return @@boards[name.to_sym]
   end
 end
+
 StartingBoards.add_board :eye_of_the_storm, {
   "starting board name" => "eye of the storm",
   "height" => 11,
   "width" => 10,
-  "walls" => [{"posx" => "3","posy" => "3"},{"posx" => "4","posy" => "3"},{"posx" => "5","posy" => "3"},{"posx" => "6","posy" => "3"},{"posx" => "2","posy" => "4"},{"posx" => "7","posy" => "4"},{"posx" => "2","posy" => "6"},{"posx" => "7","posy" => "6"},{"posx" => "3","posy" => "7"},{"posx" => "4","posy" => "7"},{"posx" => "5","posy" => "7"},{"posx" => "6","posy" => "7"}],
+  "walls" => [
+    {"posx" => "3","posy" => "3"},{"posx" => "4","posy" => "3"},{"posx" => "5","posy" => "3"},{"posx" => "6","posy" => "3"},{"posx" => "2","posy" => "4"},{"posx" => "7","posy" => "4"},{"posx" => "2","posy" => "6"},{"posx" => "7","posy" => "6"},{"posx" => "3","posy" => "7"},{"posx" => "4","posy" => "7"},{"posx" => "5","posy" => "7"},{"posx" => "6","posy" => "7"}],
   "upgradeSquares" => [{"posx" => "4","posy" => "5"},{"posx" => "5","posy" => "5"}],
   "boardStack" => [[{"posx" => "1","posy" => "0","type" => "rook","side" => "white"},{"posx" => "2","posy" => "0","type" => "knight","side" => "white"},{"posx" => "3","posy" => "0","type" => "bishop","side" => "white"},{"posx" => "4","posy" => "0","type" => "queen","side" => "white"},{"posx" => "5","posy" => "0","type" => "king","side" => "white"},{"posx" => "6","posy" => "0","type" => "bishop","side" => "white"},{"posx" => "7","posy" => "0","type" => "knight","side" => "white"},{"posx" => "8","posy" => "0","type" => "rook","side" => "white"},{"posx" => "1","posy" => "1","type" => "pawn","side" => "white"},{"posx" => "2","posy" => "1","type" => "pawn","side" => "white"},{"posx" => "3","posy" => "1","type" => "pawn","side" => "white"},{"posx" => "4","posy" => "1","type" => "pawn","side" => "white"},{"posx" => "5","posy" => "1","type" => "pawn","side" => "white"},{"posx" => "6","posy" => "1","type" => "pawn","side" => "white"},{"posx" => "7","posy" => "1","type" => "pawn","side" => "white"},{"posx" => "8","posy" => "1","type" => "pawn","side" => "white"},{"posx" => "1","posy" => "9","type" => "pawn","side" => "black"},{"posx" => "2","posy" => "9","type" => "pawn","side" => "black"},{"posx" => "3","posy" => "9","type" => "pawn","side" => "black"},{"posx" => "4","posy" => "9","type" => "pawn","side" => "black"},{"posx" => "5","posy" => "9","type" => "pawn","side" => "black"},{"posx" => "6","posy" => "9","type" => "pawn","side" => "black"},{"posx" => "7","posy" => "9","type" => "pawn","side" => "black"},{"posx" => "8","posy" => "9","type" => "pawn","side" => "black"},{"posx" => "1","posy" => "10","type" => "rook","side" => "black"},{"posx" => "2","posy" => "10","type" => "knight","side" => "black"},{"posx" => "3","posy" => "10","type" => "bishop","side" => "black"},{"posx" => "4","posy" => "10","type" => "queen","side" => "black"},{"posx" => "5","posy" => "10","type" => "king","side" => "black"},{"posx" => "6","posy" => "10","type" => "bishop","side" => "black"},{"posx" => "7","posy" => "10","type" => "knight","side" => "black"},{"posx" => "8","posy" => "10","type" => "rook","side" => "black"}]],
   "turn": "white",
@@ -2716,4 +2718,97 @@ StartingBoards.add_board :eyeOfTheStorm,{
   }
 }
 
-StartingBoards.add_board :floop, {"starting board name":"floooop","height":24,"width":24,"walls":[{"posx":"6","posy":"5"},{"posx":"7","posy":"5"},{"posx":"8","posy":"5"}],"upgradeSquares":[],"boardStack":[[{"posx":"6","posy":"2","type":"pawn","side":"blue"},{"posx":"7","posy":"2","type":"pawn","side":"blue"},{"posx":"8","posy":"2","type":"pawn","side":"blue"},{"posx":"9","posy":"2","type":"pawn","side":"blue"},{"posx":"10","posy":"5","type":"bishop","side":"black"},{"posx":"10","posy":"6","type":"bishop","side":"black"},{"posx":"11","posy":"6","type":"bishop","side":"black"},{"posx":"12","posy":"6","type":"bishop","side":"black"},{"posx":"12","posy":"7","type":"bishop","side":"white"},{"posx":"12","posy":"8","type":"bishop","side":"white"},{"posx":"12","posy":"9","type":"bishop","side":"blue"},{"posx":"11","posy":"10","type":"bishop","side":"blue"},{"posx":"12","posy":"10","type":"bishop","side":"blue"},{"posx":"11","posy":"11","type":"bishop","side":"blue"}]],"turn":"white","playerSides":{"white":"unassigned","black":"unassigned"}}
+StartingBoards.add_board :two_on_one, {
+  "starting board name" => "two on one",
+  "height" => 15,
+  "width" => 11,
+  "walls" => [
+    { "posx" => "4", "posy" => "2" },
+    { "posx" => "6", "posy" => "2" },
+    { "posx" => "3", "posy" => "3" },
+    { "posx" => "7", "posy" => "3" },
+    { "posx" => "4", "posy" => "4" },
+    { "posx" => "6", "posy" => "4" },
+    { "posx" => "3", "posy" => "5" },
+    { "posx" => "7", "posy" => "5" },
+    { "posx" => "4", "posy" => "6" },
+    { "posx" => "6", "posy" => "6" },
+    { "posx" => "3", "posy" => "7" },
+    { "posx" => "7", "posy" => "7" },
+    { "posx" => "4", "posy" => "8" },
+    { "posx" => "6", "posy" => "8" }
+  ],
+  "upgradeSquares" => [
+    { "posx" => "5", "posy" => "3" },
+    { "posx" => "5", "posy" => "4" },
+    { "posx" => "5", "posy" => "5" },
+    { "posx" => "5", "posy" => "6" },
+    { "posx" => "5", "posy" => "7" },
+    { "posx" => "5", "posy" => "8" },
+    { "posx" => "5", "posy" => "9" }
+  ],
+  "boardStack" => [
+    [
+      { "posx" => "0", "posy" => "0", "type" => "rook", "side" => "white" },
+      { "posx" => "1", "posy" => "0", "type" => "pawn", "side" => "white" },
+      { "posx" => "9", "posy" => "0", "type" => "pawn", "side" => "black" },
+      { "posx" => "10", "posy" => "0", "type" => "rook", "side" => "black" },
+      { "posx" => "0", "posy" => "1", "type" => "knight", "side" => "white" },
+      { "posx" => "1", "posy" => "1", "type" => "pawn", "side" => "white" },
+      { "posx" => "9", "posy" => "1", "type" => "pawn", "side" => "black" },
+      { "posx" => "10", "posy" => "1", "type" => "knight", "side" => "black" },
+      { "posx" => "0", "posy" => "2", "type" => "bishop", "side" => "white" },
+      { "posx" => "1", "posy" => "2", "type" => "pawn", "side" => "white" },
+      { "posx" => "9", "posy" => "2", "type" => "pawn", "side" => "black" },
+      { "posx" => "10", "posy" => "2", "type" => "bishop", "side" => "black" },
+      { "posx" => "0", "posy" => "3", "type" => "queen", "side" => "white" },
+      { "posx" => "1", "posy" => "3", "type" => "pawn", "side" => "white" },
+      { "posx" => "9", "posy" => "3", "type" => "pawn", "side" => "black" },
+      { "posx" => "10", "posy" => "3", "type" => "queen", "side" => "black" },
+      { "posx" => "0", "posy" => "4", "type" => "king", "side" => "white" },
+      { "posx" => "1", "posy" => "4", "type" => "pawn", "side" => "white" },
+      { "posx" => "9", "posy" => "4", "type" => "pawn", "side" => "black" },
+      { "posx" => "10", "posy" => "4", "type" => "king", "side" => "black" },
+      { "posx" => "0", "posy" => "5", "type" => "bishop", "side" => "white" },
+      { "posx" => "1", "posy" => "5", "type" => "pawn", "side" => "white" },
+      { "posx" => "9", "posy" => "5", "type" => "pawn", "side" => "black" },
+      { "posx" => "10", "posy" => "5", "type" => "bishop", "side" => "black" },
+      { "posx" => "0", "posy" => "6", "type" => "knight", "side" => "white" },
+      { "posx" => "1", "posy" => "6", "type" => "pawn", "side" => "white" },
+      { "posx" => "9", "posy" => "6", "type" => "pawn", "side" => "black" },
+      { "posx" => "10", "posy" => "6", "type" => "knight", "side" => "black" },
+      { "posx" => "0", "posy" => "7", "type" => "rook", "side" => "white" },
+      { "posx" => "1", "posy" => "7", "type" => "pawn", "side" => "white" },
+      { "posx" => "9", "posy" => "7", "type" => "pawn", "side" => "black" },
+      { "posx" => "10", "posy" => "7", "type" => "rook", "side" => "black" },
+      { "posx" => "0", "posy" => "13", "type" => "pawn", "side" => "red" },
+      { "posx" => "1", "posy" => "13", "type" => "pawn", "side" => "red" },
+      { "posx" => "2", "posy" => "13", "type" => "pawn", "side" => "red" },
+      { "posx" => "3", "posy" => "13", "type" => "pawn", "side" => "red" },
+      { "posx" => "4", "posy" => "13", "type" => "pawn", "side" => "red" },
+      { "posx" => "5", "posy" => "13", "type" => "pawn", "side" => "red" },
+      { "posx" => "6", "posy" => "13", "type" => "pawn", "side" => "red" },
+      { "posx" => "7", "posy" => "13", "type" => "pawn", "side" => "red" },
+      { "posx" => "8", "posy" => "13", "type" => "pawn", "side" => "red" },
+      { "posx" => "9", "posy" => "13", "type" => "pawn", "side" => "red" },
+      { "posx" => "10", "posy" => "13", "type" => "pawn", "side" => "red" },
+      { "posx" => "0", "posy" => "14", "type" => "pawn", "side" => "red" },
+      { "posx" => "1", "posy" => "14", "type" => "rook", "side" => "red" },
+      { "posx" => "2", "posy" => "14", "type" => "knight", "side" => "red" },
+      { "posx" => "3", "posy" => "14", "type" => "bishop", "side" => "red" },
+      { "posx" => "4", "posy" => "14", "type" => "queen", "side" => "red" },
+      { "posx" => "5", "posy" => "14", "type" => "king", "side" => "red" },
+      { "posx" => "6", "posy" => "14", "type" => "queen", "side" => "red" },
+      { "posx" => "7", "posy" => "14", "type" => "bishop", "side" => "red" },
+      { "posx" => "8", "posy" => "14", "type" => "knight", "side" => "red" },
+      { "posx" => "9", "posy" => "14", "type" => "rook", "side" => "red" },
+      { "posx" => "10", "posy" => "14", "type" => "pawn", "side" => "red" }
+    ]
+  ],
+  "turn" => "white",
+  "playerSides" => {
+    "white" => "unassigned",
+    "black" => "unassigned",
+    "red" => "unassigned"
+  }
+}
