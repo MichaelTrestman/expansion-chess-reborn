@@ -11,7 +11,9 @@ class MovesController < ApplicationController
   end
 
   def take_back_last_move
-    push_board( nil, true )
+    if game_data[:playerSides][current_turn.to_sym] == current_user.email
+      push_board( nil, true )
+    end
   end
 
   def calculate_moves

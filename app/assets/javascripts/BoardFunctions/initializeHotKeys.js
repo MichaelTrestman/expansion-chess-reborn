@@ -5,7 +5,7 @@ BoardFunctions.initializeHotKeys = function(){
     var key = e.keyCode
     console.log(key)
     var $board = $('#board')
-    if (key == 116) {
+    if (key == 85) {
       console.log('taking it back');
       if (confirm("do you want to take back your move?")){
         BoardFunctions.hitTakeBackEndpoint();
