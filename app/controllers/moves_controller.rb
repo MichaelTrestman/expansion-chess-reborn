@@ -137,6 +137,9 @@ class MovesController < ApplicationController
     starting_board[:upgradeSquares]
   end
 # bug fix for whatever the f is happening on the hosted one
+  def starting_board
+    StartingBoards.get_board(move_params[:starting_board].to_sym).deep_symbolize_keys
+  end
   def current_turn
     game_data[:turn]
   end

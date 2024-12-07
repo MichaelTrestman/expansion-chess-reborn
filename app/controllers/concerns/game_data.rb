@@ -15,6 +15,6 @@ module GameData
     ).to_a
   end
   def starting_board
-    StartingBoards.get_board(params[:starting_board].to_sym).deep_symbolize_keys
+    StartingBoards.get_board(params[:name].to_sym).deep_symbolize_keys
   end
 end
