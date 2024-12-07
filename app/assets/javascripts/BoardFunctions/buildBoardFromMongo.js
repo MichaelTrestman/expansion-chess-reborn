@@ -8,7 +8,7 @@ BoardFunctions.watchAndbuildBoardFromMongo = function( id ){
     // if (true){
     //   BoardFunctions.getMoveIfItIsAITurn();
     // }
-   }, 1000);
+   }, 3000);
 
 }
 
