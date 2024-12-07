@@ -1,6 +1,7 @@
 <%= form_tag("/games", method: "post") do %>
 <%= label_tag 'Choose a starting board' %>
 <%= select_tag :starting_board, options_for_select(@boards.keys) %>
-<%= puts @boards %>
-  <%= submit_tag("Create board") %>
+<%= select_tag :playing_white, options_for_select(@user_emails) %>
+<%= select_tag :playing_black, options_for_select(@user_emails) %>
+<%= submit_tag("Create board") %>
 <% end %>

@@ -3,13 +3,18 @@ class GamesController < ApplicationController
   include GameData
   before_action :authenticate_user!
   def new
+    @user_emails = User.all.map { |user| user.email  }
     @rails_env = ENV['RAILS_ENV']
     @boards = ::StartingBoards.boards
   end
 
   def create
+  
     board = starting_board
-    board[:playerSides].each_key{ |k| board[:playerSides][k] = current_user.email}
+    board[:playerSides] = {
+      "white":params['playing_white'],
+      "black":params['playing_black']
+    }
     board[:lastUpdate] = Time.now
     id = games_db.insert_one(board).inserted_ids.first.to_s
     redirect_to :action => "show", :id => id

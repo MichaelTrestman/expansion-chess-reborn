@@ -15,11 +15,23 @@ class MovesController < ApplicationController
   end
 
   def calculate_moves
-    if move_params[:chosen_piece][:side] == current_turn
+    puts "game_data[:playerSides][:white"
+    puts game_data[:playerSides][:black]
+    puts "current_user.email"
+    puts current_user.email
+    puts "current_turn"
+    puts current_turn
+    puts "game_data[:playerSides][current_turn.to_s]"
+    puts game_data[:playerSides][current_turn.to_s]
+    puts move_params[:chosen_piece][:side] == current_turn
+    puts "game_data[:playerSides][current_turn.to_sym] == current_user.email"
+    puts game_data[:playerSides][current_turn.to_sym] == current_user.email
+
+    if move_params[:chosen_piece][:side] == current_turn && game_data[:playerSides][current_turn.to_sym] == current_user.email
       possible_moves = new_move_calculator.calculate_moves
     else
-      possible_moves = new_move_calculator.calculate_moves
-      # possible_moves = []
+      # possible_moves = new_move_calculator.calculate_moves
+      possible_moves = []
     end
     render :json => possible_moves
   end

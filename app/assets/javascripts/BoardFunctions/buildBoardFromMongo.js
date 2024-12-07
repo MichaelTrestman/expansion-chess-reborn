@@ -1,12 +1,13 @@
+BoardFunctions.isPlayersTurn = function()
+{}
 BoardFunctions.watchAndbuildBoardFromMongo = function( id ){
   setInterval(function(){
-
-    if (false){
-      BoardFunctions.getDataAndTriggerRebuildFromMongo(id);
-    }
-    if (true){
-      BoardFunctions.getMoveIfItIsAITurn();
-    }
+    
+    BoardFunctions.getDataAndTriggerRebuildFromMongo(id);
+    
+    // if (true){
+    //   BoardFunctions.getMoveIfItIsAITurn();
+    // }
    }, 1000);
 
 }
@@ -32,22 +33,24 @@ BoardFunctions.getDataAndTriggerRebuildFromMongo = function(id){
 
 
 BoardFunctions.buildBoardFromMongo = function(gameData){
+  if(BoardFunctions.turn === gameData.turn){}else{
+    $('.piece').remove();
+    BoardFunctions.clearMoves();
+    BoardFunctions.startingBoardName = gameData['name'];
+    BoardFunctions.playerSides = gameData.playerSides;
+    var currentPiecePositions = gameData.boardStack[gameData.boardStack.length - 1];
 
-  $('.piece').remove();
-  BoardFunctions.clearMoves();
-  BoardFunctions.startingBoardName = gameData['name'];
-  BoardFunctions.playerSides = gameData.playerSides;
-  var currentPiecePositions = gameData.boardStack[gameData.boardStack.length - 1];
+    BoardFunctions.currentPiecePositions = currentPiecePositions;
 
-  BoardFunctions.currentPiecePositions = currentPiecePositions;
-
-  if (currentPiecePositions==undefined) {
-    throw "missing board :("
+    if (currentPiecePositions==undefined) {
+      throw "missing board :("
+    }
+    BoardFunctions.loadPieces(currentPiecePositions);
+    BoardFunctions.setWalls(gameData.walls);
+    BoardFunctions.setUpgradeSquares(gameData.upgradeSquares);
+    BoardFunctions.setTurn(gameData.turn);
+    console.log("setting turn!")
+    console.log(gameData.turn)
+    BoardFunctions.initializeSquares();
   }
-  BoardFunctions.loadPieces(currentPiecePositions);
-  BoardFunctions.setWalls(gameData.walls);
-  BoardFunctions.setUpgradeSquares(gameData.upgradeSquares);
-  BoardFunctions.setTurn(gameData.turn);
-  BoardFunctions.initializeSquares();
-
 }
