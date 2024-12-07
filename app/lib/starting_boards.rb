@@ -51,7 +51,7 @@ StartingBoards.add_board :knife_fight_in_an_elevator, {
 }
 
 StartingBoards.add_board :corner_shot, {
-  "name" => "corner shot",
+  "name" => "corner_shot",
   "height" => 12,
   "width" => 12,
   "walls" => [{"posx"=>"9","posy"=>"1","type"=>"wall"},{"posx"=>"4","posy"=>"2","type"=>"wall"},{"posx"=>"9","posy"=>"2","type"=>"wall"},{"posx"=>"10","posy"=>"2","type"=>"wall"},{"posx"=>"2","posy"=>"3","type"=>"wall"},{"posx"=>"3","posy"=>"3","type"=>"wall"},{"posx"=>"4","posy"=>"3","type"=>"wall"},{"posx"=>"7","posy"=>"8","type"=>"wall"},{"posx"=>"8","posy"=>"8","type"=>"wall"},{"posx"=>"9","posy"=>"8","type"=>"wall"},{"posx"=>"1","posy"=>"9","type"=>"wall"},{"posx"=>"2","posy"=>"9","type"=>"wall"},{"posx"=>"7","posy"=>"9","type"=>"wall"},{"posx"=>"2","posy"=>"10","type"=>"wall"}],
