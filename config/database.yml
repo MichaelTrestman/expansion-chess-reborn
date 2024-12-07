@@ -1,11 +1,10 @@
-
 default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: your_postgres_username
-  password: your_postgres_password
-  host: localhost
+  username: postgres_user
+  password: postgres_password
+  host: xchess-postgres  # <-- Use the Postgres service name here
 
 development:
   <<: *default

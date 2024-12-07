@@ -1,11 +1,13 @@
 <div id="left-sidebar">
-<h2>XChess!</h2>
-<p>instructions: <br><br>
+<h2>Otherchess</h2>
+<h3>current turn: <span id='turn-indicator'></span></h3>
+<h3>Controls:<br>
 pan: w,a,s,d <br>
 zoom: [,] <br>
+</h3>
+<h3>Instrutions:<br></h3>
+<p>Just like 'regular' chess except pawns can move in all 4 cardinal directions and capture in all 4 diagonals. Brown spaces are walls, and green spaces are upgrade squares where pawns become queens. There is currently no castling.</p>
 
-</p>
-<p>current turn: <span id='turn-indicator'></span></p>
 </div>
 <div id="board" class="board" style="height:<%= "#{1+(102* @board_height)}px;width:#{(101*@board_width)}px" %>">
   <% @board_height.times do |i| %>

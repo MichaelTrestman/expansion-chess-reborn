@@ -1,0 +1,4 @@
+<div class="sidebar">
+  <h3>Welcome, <%= current_user.email %>!</h3>
+  <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "logout-button" %>
+</div>
