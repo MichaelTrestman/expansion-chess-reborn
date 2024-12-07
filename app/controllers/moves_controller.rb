@@ -18,7 +18,8 @@ class MovesController < ApplicationController
     if move_params[:chosen_piece][:side] == current_turn
       possible_moves = new_move_calculator.calculate_moves
     else
-      possible_moves = []
+      possible_moves = new_move_calculator.calculate_moves
+      # possible_moves = []
     end
     render :json => possible_moves
   end

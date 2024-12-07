@@ -35,9 +35,7 @@ BoardFunctions.buildBoardFromMongo = function(gameData){
 
   $('.piece').remove();
   BoardFunctions.clearMoves();
-  BoardFunctions.startingBoardName = gameData['starting board name'];
-  console.log('wtf')
-  console.log(gameData.playerSides)
+  BoardFunctions.startingBoardName = gameData['name'];
   BoardFunctions.playerSides = gameData.playerSides;
   var currentPiecePositions = gameData.boardStack[gameData.boardStack.length - 1];
 

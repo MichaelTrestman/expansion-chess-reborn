@@ -12,7 +12,7 @@ class StartingBoards
 end
 
 StartingBoards.add_board :eye_of_the_storm, {
-  "starting board name" => "eye of the storm",
+  "name" => "eye of the storm",
   "height" => 11,
   "width" => 10,
   "walls" => [
@@ -27,7 +27,7 @@ StartingBoards.add_board :eye_of_the_storm, {
   
 }
 StartingBoards.add_board :knife_fight_in_an_elevator, {
-  "starting board name" => "knife_fight_in_an_elevator",
+  "name" => "knife_fight_in_an_elevator",
   "height" => 9,
   "width" => 9,
   "walls" => [
@@ -52,7 +52,7 @@ StartingBoards.add_board :knife_fight_in_an_elevator, {
 }
 
 StartingBoards.add_board :mini_something, {
-  "starting board name" => "mini_something",
+  "name" => "mini_something",
   "height" => 12,
   "width" => 12,
   "walls" => [{"posx"=>"9","posy"=>"1","type"=>"wall"},{"posx"=>"4","posy"=>"2","type"=>"wall"},{"posx"=>"9","posy"=>"2","type"=>"wall"},{"posx"=>"10","posy"=>"2","type"=>"wall"},{"posx"=>"2","posy"=>"3","type"=>"wall"},{"posx"=>"3","posy"=>"3","type"=>"wall"},{"posx"=>"4","posy"=>"3","type"=>"wall"},{"posx"=>"7","posy"=>"8","type"=>"wall"},{"posx"=>"8","posy"=>"8","type"=>"wall"},{"posx"=>"9","posy"=>"8","type"=>"wall"},{"posx"=>"1","posy"=>"9","type"=>"wall"},{"posx"=>"2","posy"=>"9","type"=>"wall"},{"posx"=>"7","posy"=>"9","type"=>"wall"},{"posx"=>"2","posy"=>"10","type"=>"wall"}],
@@ -67,7 +67,7 @@ StartingBoards.add_board :mini_something, {
 
 
 StartingBoards.add_board :mandala, {
-  "starting board name" => "mandala",
+  "name" => "mandala",
   "height" => 24,
   "width" => 24,
   "walls" => [{"posx" => "4","posy" => "2"},{"posx" => "10","posy" => "2"},{"posx" => "13","posy" => "2"},{"posx" => "19","posy" => "2"},{"posx" => "4","posy" => "3"},{"posx" => "10","posy" => "3"},{"posx" => "11","posy" => "3"},{"posx" => "12","posy" => "3"},{"posx" => "13","posy" => "3"},{"posx" => "19","posy" => "3"},{"posx" => "2","posy" => "4"},{"posx" => "3","posy" => "4"},{"posx" => "20","posy" => "4"},{"posx" => "21","posy" => "4"},{"posx" => "10","posy" => "7"},{"posx" => "11","posy" => "7"},{"posx" => "12","posy" => "7"},{"posx" => "13","posy" => "7"},{"posx" => "9","posy" => "9"},{"posx" => "10","posy" => "9"},{"posx" => "13","posy" => "9"},{"posx" => "14","posy" => "9"},{"posx" => "7","posy" => "10"},{"posx" => "9","posy" => "10"},{"posx" => "14","posy" => "10"},{"posx" => "16","posy" => "10"},{"posx" => "1","posy" => "11"},{"posx" => "7","posy" => "11"},{"posx" => "16","posy" => "11"},{"posx" => "22","posy" => "11"},{"posx" => "1","posy" => "12"},{"posx" => "7","posy" => "12"},{"posx" => "16","posy" => "12"},{"posx" => "22","posy" => "12"},{"posx" => "7","posy" => "13"},{"posx" => "9","posy" => "13"},{"posx" => "14","posy" => "13"},{"posx" => "16","posy" => "13"},{"posx" => "9","posy" => "14"},{"posx" => "10","posy" => "14"},{"posx" => "13","posy" => "14"},{"posx" => "14","posy" => "14"},{"posx" => "10","posy" => "16"},{"posx" => "11","posy" => "16"},{"posx" => "12","posy" => "16"},{"posx" => "13","posy" => "16"},{"posx" => "2","posy" => "19"},{"posx" => "3","posy" => "19"},{"posx" => "20","posy" => "19"},{"posx" => "21","posy" => "19"},{"posx" => "4","posy" => "20"},{"posx" => "10","posy" => "20"},{"posx" => "11","posy" => "20"},{"posx" => "12","posy" => "20"},{"posx" => "13","posy" => "20"},{"posx" => "19","posy" => "20"},{"posx" => "4","posy" => "21"},{"posx" => "10","posy" => "21"},{"posx" => "13","posy" => "21"},{"posx" => "19","posy" => "21"}],
@@ -81,7 +81,7 @@ StartingBoards.add_board :mandala, {
 }
 
 StartingBoards.add_board :shmoop,{
-  "starting board name": "shmoop",
+  "name": "shmoop",
   "height": 24,
   "width": 24,
   "walls": [
@@ -837,7 +837,7 @@ StartingBoards.add_board :shmoop,{
   }
 }
 StartingBoards.add_board :trio,{
-  "starting board name" => "trio",
+  "name" => "trio",
   "height" => 24,
   "width" => 24,
   "walls" => [{"posx":"0","posy":"0"},
@@ -977,7 +977,7 @@ StartingBoards.add_board :trio,{
 }
 
 StartingBoards.add_board :pyramidOfDeath,{
-  "starting board name": "pyramidOfDeath",
+  "name": "pyramidOfDeath",
   "height": 32,
   "width": 32,
   "walls": [
@@ -2150,7 +2150,7 @@ StartingBoards.add_board :pyramidOfDeath,{
 }
 
 StartingBoards.add_board :eyeOfTheStorm,{
-  "starting board name": "Eye of the Storm",
+  "name": "Eye of the Storm",
   "height": 11,
   "width": 17,
   "walls": [
@@ -2719,7 +2719,7 @@ StartingBoards.add_board :eyeOfTheStorm,{
 }
 
 StartingBoards.add_board :two_on_one, {
-  "starting board name" => "two on one",
+  "name" => "two on one",
   "height" => 15,
   "width" => 11,
   "walls" => [

@@ -2,7 +2,7 @@ BoardFunctions.buildBoardFromSnapshot = function(snapshot){
   $('.piece').remove();
   BoardFunctions.clearMoves();
   var gameData = snapshot.val();
-  BoardFunctions.startingBoardName = gameData['starting board name'];
+  BoardFunctions.startingBoardName = gameData['name'];
   BoardFunctions.playerSides = gameData.playerSides;
   var currentPiecePositions = gameData.boardStack[gameData.boardStack.length - 1];
 

@@ -4,7 +4,7 @@ class GamesController < ApplicationController
   before_action :authenticate_user!
   def new
     @rails_env = ENV['RAILS_ENV']
-    @board_names = ::StartingBoards.boards.keys
+    @boards = ::StartingBoards.boards
   end
 
   def create
@@ -34,6 +34,7 @@ class GamesController < ApplicationController
     @current_board_state = board_stack.last
     @board_height = game_data[:height]
     @board_width = game_data[:width]
+    @player_sides = game_data[:playerSides]
   end
 
   private

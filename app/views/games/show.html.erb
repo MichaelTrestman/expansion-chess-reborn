@@ -8,6 +8,10 @@ zoom: [,] <br>
 <h3>Instrutions:<br></h3>
 <p>Just like 'regular' chess except pawns can move in all 4 cardinal directions and capture in all 4 diagonals. Brown spaces are walls, and green spaces are upgrade squares where pawns become queens. There is currently no castling.</p>
 
+
+<% @player_sides.each do |color, email|%>
+Playing <%=  color %>: <%=  email %>
+<% end %>
 </div>
 <div id="board" class="board" style="height:<%= "#{1+(102* @board_height)}px;width:#{(101*@board_width)}px" %>">
   <% @board_height.times do |i| %>

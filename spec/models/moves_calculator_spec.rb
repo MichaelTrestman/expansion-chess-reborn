@@ -159,7 +159,7 @@ RSpec.describe MovesCalculator do
 
   describe "#space_available" do
     let(:starting_board) { {
-      "starting board name" => 'test example',
+      "name" => 'test example',
       "height" => 3,
       "width" => 3,
       "walls" => [],
