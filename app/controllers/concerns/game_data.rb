@@ -2,7 +2,12 @@ module GameData
   extend ActiveSupport::Concern
 
   def games_db
-    @games_db ||= Mongo::Client.new([ 'xchess-mongo-db:27017' ], :database => 'dev').database[:games]
+    # Thread.list.each do |thread|
+    # puts "Thread ID: #{thread.object_id}, Status: #{thread.status}, Backtrace: #{thread.backtrace}"
+    # end
+    puts "Active Threads: #{Thread.list.size}"
+    # @games_db ||= Mongo::Client.new(['xchess-mongo-db:27017'], database: 'dev').database[:games]
+    MongoDBX.games_db
   end
   def games_for_user user
     games_db.find(
